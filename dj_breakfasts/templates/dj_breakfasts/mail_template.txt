@@ -1,0 +1,5 @@
+Bonjour {{ first_name }},
+
+Le {{ date }}, ce sera votre tour de payer le petit déjeuner pour l'équipe.
+
+Bonne journée.

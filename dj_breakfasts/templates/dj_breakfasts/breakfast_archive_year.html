@@ -1,0 +1,16 @@
+<h1>{{ year|date:"Y" }}</h1>
+
+<ul>
+	{% for object in object_list %}
+		<li>{{ object.date|date:"F j, Y" }}: {{ object.participant }}</li>
+	{% endfor %}
+</ul>
+
+<p>
+  {% if previous_year %}
+    Previous year: <a href="{% url 'dj-breakfasts:breakfast_year' previous_year|date:"Y" %}">{{ previous_year|date:"F Y" }}</a>
+  {% endif %}
+  {% if next_year %}
+    Next year: <a href="{% url 'dj-breakfasts:breakfast_year' next_year|date:"Y" %}">{{ next_year|date:"F Y" }}</a>
+  {% endif %}
+</p>
