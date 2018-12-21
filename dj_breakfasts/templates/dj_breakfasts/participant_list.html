@@ -1,0 +1,8 @@
+<ul>
+	{% for participant in participant_list %}
+		<li>{{ participant }}</li>
+    
+    {% empty %}
+        <li>No participant yet.</li>
+	{% endfor %}
+</ul>

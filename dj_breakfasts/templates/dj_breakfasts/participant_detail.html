@@ -1,0 +1,17 @@
+<h1>{{ participant }}</h1>
+
+
+<h2>Breakfasts</h2>
+{% for breakfast in participant.breakfast_set.all %}
+  {% if forloop.first %}
+    <ul>
+  {% endif %}
+
+  <li>{{ breakfast.date }}</li>
+
+  {% if forloop.last %}
+    </ul>
+  {% endif %}
+{% empty %}
+  No date yet...
+{% endfor %}

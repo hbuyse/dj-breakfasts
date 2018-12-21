@@ -4,7 +4,7 @@
 {% block path %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:breakfast_year' current_year %}">Accueil</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:list' %}">Accueil</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{ year|date:"Y"}}</a></li>
     </ol>
   </nav>
@@ -40,7 +40,7 @@
     <ul class="pagination justify-content-center">
       {% if previous_year %}
         <li class="page-item">
-          <a class="page-link" href="{% url 'dj-breakfasts:breakfast_year' previous_year|date:"Y" %}" tabindex="-1">Previous year</a>
+          <a class="page-link" href="{% url 'dj-breakfasts:year' previous_year|date:"Y" %}" tabindex="-1">Previous year</a>
         </li>
       {% else %}
         <li class="page-item disabled">
@@ -52,7 +52,7 @@
       </li>
       {% if next_year %}
         <li class="page-item">
-          <a class="page-link" href="{% url 'dj-breakfasts:breakfast_year' next_year|date:"Y" %}" tabindex="-1">Next year</a>
+          <a class="page-link" href="{% url 'dj-breakfasts:year' next_year|date:"Y" %}" tabindex="-1">Next year</a>
         </li>
       {% else %}
         <li class="page-item disabled">

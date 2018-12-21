@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block path %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Accueil</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+
+{% block page_title %}
+  All breakfasts
+{% endblock %}
+
+
+{% block content %}
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list reversed %}
+        <tr>
+          <td>{{ object.date|date:"F j" }}<sup>{{ object.date|date:"S" }}</sup>, {{ object.date|date:"Y" }}</td>
+          <td>{{ object.participant.first_name }}</td>
+          <td>{{ object.participant.last_name }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

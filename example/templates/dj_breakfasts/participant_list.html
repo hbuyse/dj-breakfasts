@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load breakfast_extras %}
+
+{% block path %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:list' %}">Accueil</a></li>
+      <li class="breadcrumb-item active">Participants</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+
+{% block page_title %}
+  Participants
+{% endblock %}
+
+
+{% block content %}
+  {% for participant in participant_list %}
+    {% ifequal forloop.counter0|modulo:4 0 %}
+      <div class="row" style="margin-bottom: 10px;">
+    {% endifequal %}
+
+    <div class="col-3">
+      <div class="card">
+        <div class="card-header">
+          {{ participant }}
+        </div>
+        <div class="card-body">
+          <p class="card-text" style="margin-bottom: 0px;">Future breakfasts: {{ participant.get_future_breakfast|length }}</p>
+          <p class="card-text">Past breakfasts: {{ participant.get_past_breakfast|length }}</p>
+          <a href="{% url 'dj-breakfasts:participant-detail' participant.pk %}" class="card-link">Details</a>
+        </div>
+      </div>
+    </div>
+
+    {% ifequal forloop.counter0|modulo:4 3 %}
+      </div>
+    {% endifequal %}
+  {% empty %}
+    No participant yet...
+  {% endfor %}
+{% endblock %}

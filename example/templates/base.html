@@ -40,11 +40,39 @@
             <ul class="navbar-nav mr-auto">
               {% now "Y" as current_year %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'dj-breakfasts:breakfast_year' current_year %}">
+                <a class="nav-link" href="{% url 'dj-breakfasts:year' current_year %}">
                   By year
                 </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'dj-breakfasts:participant-list' %}">
+                  Participant
+                </a>
+              </li>
             </ul>
+            <ul class="navbar-nav navbar-right">
+              {% if not user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">
+                    Login
+                  </a>
+                </li> 
+              {% else %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ request.user }}
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    {% if user.is_staff %}
+                      <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
+                      <div class="dropdown-divider"></div>
+                    {% endif %}
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  </div>
+                </li>
+              {% endif %}
+            </ul>
+
           </div>
         </header>
 

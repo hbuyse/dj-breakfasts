@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load breakfast_extras %}
+
+{% block path %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:list' %}">Accueil</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:participant-list' %}">Participants</a></li>
+      <li class="breadcrumb-item active">{{ participant }}</li>
+    </ol>
+  </nav>
+{% endblock %}
+
+
+{% block page_title %}
+  Participants
+{% endblock %}
+
+
+{% block content %}
+  <h2>Future breakfasts</h2>
+  {% for breakfast in participant.get_future_breakfast %}
+    {% if forloop.counter0|modulo:4 == 0 %}
+      <div class="row" style="margin-bottom: 10px;">
+    {% endif %}
+
+    <div class="col-3">
+      <div class="card">
+        <div class="card-body">
+          {{ breakfast.date|date:"F j, Y" }}
+        </div>
+      </div>
+    </div>
+
+    {% if forloop.counter0|modulo:4 == 3 or forloop.last %}
+      </div>
+    {% endif %}
+  {% empty %}
+    No future breakfasts yet...
+  {% endfor %}
+
+  <h2>Past breakfasts</h2>
+  {% for breakfast in participant.get_past_breakfast %}
+    {% ifequal forloop.counter0|modulo:4 0 %}
+      <div class="row" style="margin-bottom: 10px;">
+    {% endifequal %}
+
+    <div class="col-3">
+      <div class="card">
+        <div class="card-body">
+          {{ breakfast.date|date:"F j, Y" }}
+        </div>
+      </div>
+    </div>
+
+    {% ifequal forloop.counter0|modulo:4 3 %}
+      </div>
+    {% endifequal %}
+  {% empty %}
+    No past breakfasts yet...
+  {% endfor %}
+{% endblock %}
