@@ -32,7 +32,10 @@ class Participant(models.Model):
         return self.breakfast_set.filter(date__lte=datetime.today()).order_by("-date")
     
     def get_future_breakfast(self):
-        return self.breakfast_set.filter(date__gt=datetime.today()).order_by("-date")
+        return self.breakfast_set.filter(date__gt=datetime.today()).order_by("date")
+
+    def get_next_breakfast(self):
+        return self.breakfast_set.filter(date__gt=datetime.today()).order_by("date").first()
 
 
 class Breakfast(models.Model):

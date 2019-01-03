@@ -30,7 +30,12 @@
         </div>
         <div class="card-body">
           <p class="card-text" style="margin-bottom: 0px;">Future breakfasts: {{ participant.get_future_breakfast|length }}</p>
-          <p class="card-text">Past breakfasts: {{ participant.get_past_breakfast|length }}</p>
+          {% if participant.get_next_breakfast %}
+            <p class="card-text" style="margin-bottom: 0px;">Past breakfasts: {{ participant.get_past_breakfast|length }}</p>
+            <p class="card-text">Next breakfast:  {{ participant.get_next_breakfast.date }}</p>
+          {% else %}
+            <p class="card-text">Past breakfasts: {{ participant.get_past_breakfast|length }}</p>
+          {% endif %}
           <a href="{% url 'dj-breakfasts:participant-detail' participant.pk %}" class="card-link">Details</a>
         </div>
       </div>
