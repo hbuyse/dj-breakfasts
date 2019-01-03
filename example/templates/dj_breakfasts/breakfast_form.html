@@ -4,7 +4,7 @@
 {% block path %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:list' %}">Accueil</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:list' %}">Home</a></li>
       {% if 'create' in request.path %}
         <li class="breadcrumb-item active" aria-current="page">Create breakfast</a></li>
       {% elif 'update' in request.path %}
