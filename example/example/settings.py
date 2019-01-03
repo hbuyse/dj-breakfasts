@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'dj_breakfasts',
+    'django_icons',
 
     # if your app has other dependencies that need to be added to the site
     # they should be added here
