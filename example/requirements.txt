@@ -4,6 +4,6 @@
 # Your app in editable mode.
 -e ../
 
-django-bootstrap4==0.0.6
+django-bootstrap4==0.0.7
 django-icons==0.2.1
 python-json-logger==0.1.9
