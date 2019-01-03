@@ -14,12 +14,12 @@
 
 
 {% block page_title %}
-  Participants
+  {{ participant }}
 {% endblock %}
 
 
 {% block content %}
-  <h2>Future breakfasts</h2>
+  <h3>Future breakfasts</h3>
   {% for breakfast in participant.get_future_breakfast %}
     {% if forloop.counter0|modulo:4 == 0 %}
       <div class="row" style="margin-bottom: 10px;">
@@ -40,7 +40,7 @@
     No future breakfasts yet...
   {% endfor %}
 
-  <h2>Past breakfasts</h2>
+  <h3>Past breakfasts</h3>
   {% for breakfast in participant.get_past_breakfast %}
     {% ifequal forloop.counter0|modulo:4 0 %}
       <div class="row" style="margin-bottom: 10px;">
