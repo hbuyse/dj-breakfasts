@@ -16,13 +16,12 @@ Including another URLconf
 from django.conf.urls import include
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth.views import LoginView as AuthLoginView
-from django.contrib.auth.views import LogoutView as AuthLogoutView
+from django.contrib.auth import views as auth_views
 from django.urls import path
 
 urlpatterns = [
-    path('login/', AuthLoginView, name="login"),
-    path('logout/', AuthLogoutView, name="logout"),
+    path('login/', auth_views.LoginView.as_view(), name="login"),
+    path('logout/', auth_views.LogoutView.as_view(), name="logout"),
     path('admin/', admin.site.urls, name='admin'),
     path('', include('dj_breakfasts.urls')),
 ]
