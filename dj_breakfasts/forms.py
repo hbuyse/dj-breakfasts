@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext as _
 
 from .models import Breakfast, Participant
+from .tasks import send_deferred_mail
 
 class BreakfastForm(forms.ModelForm):
     """

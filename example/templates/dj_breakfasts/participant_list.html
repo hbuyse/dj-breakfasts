@@ -5,7 +5,7 @@
 {% block path %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:list' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:next' %}">Home</a></li>
       <li class="breadcrumb-item active">Participants</li>
     </ol>
   </nav>
@@ -14,6 +14,14 @@
 
 {% block page_title %}
   Participants
+{% endblock %}
+
+{% block page_title_buttons %}
+  {% if user.is_authenticated %}
+    <div class="btn-group float-right" role="group" aria-label="Basic example">
+      <a class="btn btn-primary" href="{% url 'dj-breakfasts:participant-create' %}">New post</a>
+    </div>
+  {% endif %}
 {% endblock %}
 
 
@@ -30,12 +38,15 @@
         </div>
         <div class="card-body">
           <p class="card-text" style="margin-bottom: 0px;">Future breakfasts: {{ participant.get_future_breakfast|length }}</p>
+          {% comment %}
           {% if participant.get_next_breakfast %}
             <p class="card-text" style="margin-bottom: 0px;">Past breakfasts: {{ participant.get_past_breakfast|length }}</p>
             <p class="card-text">Next breakfast:  {{ participant.get_next_breakfast.date }}</p>
           {% else %}
             <p class="card-text">Past breakfasts: {{ participant.get_past_breakfast|length }}</p>
           {% endif %}
+          {% endcomment %}
+          <p class="card-text">Past breakfasts: {{ participant.get_past_breakfast|length }}</p>
           <a href="{% url 'dj-breakfasts:participant-detail' participant.pk %}" class="card-link">Details</a>
         </div>
       </div>

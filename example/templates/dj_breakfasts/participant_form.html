@@ -4,12 +4,13 @@
 {% block path %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:list' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:next' %}">Home</a></li>
       <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:participant-list' %}">Participants</a></li>
       {% if 'create' in request.path %}
         <li class="breadcrumb-item active" aria-current="page">Create</a></li>
       {% elif 'update' in request.path %}
-        <li class="breadcrumb-item active" aria-current="page">Update '{{ participant }}'</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'dj-breakfasts:participant-detail' participant.id %}">{{ participant }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Update</a></li>
       {% endif %}
     </ol>
   </nav>

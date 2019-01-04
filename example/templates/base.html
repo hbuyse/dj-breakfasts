@@ -39,17 +39,18 @@
 
           <div class="collapse navbar-collapse" id="DjbreakfastsNavbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-              {% now "Y" as current_year %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'dj-breakfasts:year' current_year %}">
-                  By year
-                </a>
-              </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'dj-breakfasts:participant-list' %}">
                   Participant
                 </a>
               </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'dj-breakfasts:create' %}">
+                  Create
+                </a>
+              </li>
+              {% endif %}
             </ul>
             <ul class="navbar-nav navbar-right">
               {% if not user.is_authenticated %}

@@ -38,13 +38,6 @@ class BreakfastAdmin(admin.ModelAdmin):
             queryset[0].save()            
             queryset[1].save()
 
-    def send_mail(self, request, queryset):
-        if len(queryset) != 1:
-            self.message_user(request, "Impossible to send to {} participants".format(len(queryset)))
-        else:
-            queryset[0].send_mail()
-
-
 
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):

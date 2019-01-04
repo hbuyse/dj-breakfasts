@@ -13,30 +13,50 @@ from . import views
 app_name = 'dj-breakfasts'
 urlpatterns = [
     path("",
-         view=RedirectView.as_view(url="list/"),
+         view=RedirectView.as_view(url="next/"),
          name='index',
          ),
-    path("list/",
+    path("next/",
          view=views.BreakfastListView.as_view(),
-         name="list"
+         name="next"
+         ),
+    path("past/",
+         view=views.BreakfastListView.as_view(past=True),
+         name="past"
          ),
     path("create/",
          view=views.BreakfastCreateView.as_view(),
          name="create"
          ),
-    path("<int:year>/",
-         view=views.BreakfastYearArchiveView.as_view(),
-         name="year"
+    path("<int:pk>/",
+         view=views.BreakfastDetailView.as_view(),
+         name="detail"
+         ),
+    path("<int:pk>/update/",
+         view=views.BreakfastUpdateView.as_view(),
+         name="update"
+         ),
+    path("<int:pk>/delete/",
+         view=views.BreakfastDeleteView.as_view(),
+         name="delete"
+         ),
+    path("participants/<int:pk>/",
+         view=views.ParticipantDetailView.as_view(),
+         name="participant-detail"
+         ),
+    path("participants/<int:pk>/update/",
+         view=views.ParticipantUpdateView.as_view(),
+         name="participant-update"
+         ),
+    path("participants/<int:pk>/delete/",
+         view=views.ParticipantDeleteView.as_view(),
+         name="participant-delete"
          ),
     path("participants/",
          view=views.ParticipantListView.as_view(),
          name="participant-list"
          ),
-    path("participants/<int:pk>",
-         view=views.ParticipantDetailView.as_view(),
-         name="participant-detail"
-         ),
-    path("participants/create",
+    path("participants/create/",
          view=views.ParticipantCreateView.as_view(),
          name="participant-create"
          ),

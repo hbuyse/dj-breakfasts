@@ -11,7 +11,11 @@
 
 
 {% block page_title %}
-  All breakfasts
+  {% if past %}
+    Past breakfasts
+  {% else %}
+    Next breakfasts
+  {% endif %}
 {% endblock %}
 
 
@@ -22,6 +26,9 @@
         <th scope="col">Date</th>
         <th scope="col">First name</th>
         <th scope="col">Last name</th>
+        {% if user.is_authenticated %}
+          <th scope="col">Links</th>
+        {% endif %}
       </tr>
     </thead>
     <tbody>
@@ -30,6 +37,18 @@
           <td>{{ object.date|date:"F j" }}<sup>{{ object.date|date:"S" }}</sup>, {{ object.date|date:"Y" }}</td>
           <td>{{ object.participant.first_name }}</td>
           <td>{{ object.participant.last_name }}</td>
+          {% if user.is_authenticated %}
+            <td>
+              <div class="btn-group btn-group-sm float-right" role="group" aria-label="Basic example">
+                {% if perms.dj_breakfasts.change_breakfast %}
+                  <a class="btn btn-primary" href="{% url 'dj-breakfasts:update' object.id %}">Update</a>
+                {% endif %}
+                {% if perms.dj_breakfasts.delete_breakfast %}
+                  <a class="btn btn-danger" href="{% url 'dj-breakfasts:delete' object.id %}">Delete</a>
+                {% endif %}
+              </div>
+            </td>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>
