@@ -16,14 +16,14 @@ logger = logging.getLogger(__name__)
 @receiver(post_save, sender=Participant)
 def add_first_breakfast_created_user(sender, instance, **kwargs):
     """Add the first breakfast date for a newly created participant."""
-    logger.debug("add_first_breakfast_created_user");
+    logger.debug("Post save participant {} {}".format(instance.first_name, instance.last_name));
     if kwargs['created']:
-        logger.debug("created");
         today = date.today()
         next_friday = today + timedelta( (4-today.weekday()) % 7 ) 
         if today.weekday() == 4:
             next_friday += timedelta(weeks=1)
 
+        logger.info("Creation of the first breakfast at date {}".format(next_friday + timedelta(weeks=len(Participant.objects.filter(is_active=True)))));
         b = Breakfast.objects.create(
                 participant=instance,
                 date=next_friday + timedelta(weeks=len(Participant.objects.filter(is_active=True)))
