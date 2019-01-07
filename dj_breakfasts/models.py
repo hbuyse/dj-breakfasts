@@ -43,7 +43,7 @@ class Participant(models.Model):
 class Breakfast(models.Model):
     """Breakfast date"""
 
-    participant = models.ForeignKey('Participant', on_delete=models.CASCADE, unique_for_date="date")
+    participant = models.ForeignKey('Participant', on_delete=models.DO_NOTHING, unique_for_date="date")
     date = models.DateField('Breakfast creation date')
     created = models.DateTimeField('Breakfast creation date', auto_now_add=True)
     modified = models.DateTimeField('Breakfast last modification date', auto_now=True)
