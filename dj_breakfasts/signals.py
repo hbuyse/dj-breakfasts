@@ -15,15 +15,19 @@ logger = logging.getLogger(__name__)
 
 
 @receiver(post_save, sender=Participant)
-def add_first_breakfast_created_user(sender, instance, **kwargs):
+def post_save_participant(sender, instance, **kwargs):
     """Post saving function used when saving a Participant
+
+    If the user has just been created, then we create his/her first breakfast.
+    If the user has been deactivated, then we remove his/her future breakfasts
     """
     # Add the first breakfast date for a newly created participant.
     if kwargs['created']:
         last_breakfast = Breakfast.objects.last()
+        next_friday = date.today() + timedelta( (4-date.today().weekday()) % 7 )
         b = Breakfast.objects.create(
                 participant=instance,
-                date=last_breakfast.date + timedelta(weeks=1)
+                date=next_friday if last_breakfast is None else last_breakfast.date + timedelta(weeks=1)
             )
     # If an user is deactivated, then we remove his/her next breakfasts
     elif not instance.is_active:
@@ -32,7 +36,9 @@ def add_first_breakfast_created_user(sender, instance, **kwargs):
             b.delete()
 
 @receiver(pre_save, sender=Breakfast)
-def prepare_send_email(sender, instance, **kwargs):
+def pre_save_breakfast(sender, instance, **kwargs):
+    """Prepare the Celery task to send the email and save its id to be remove if needed
+    """
     if instance.date > date.today():
         email_date = instance.date - timedelta(days=1)
 
@@ -54,7 +60,7 @@ def prepare_send_email(sender, instance, **kwargs):
         logger.info("An email (task_id: {}) will be send the {}".format(instance.email_task_id, email_date))
 
 @receiver(post_delete, sender=Breakfast)
-def anticipate_breakfasts_by_a_week(sender, instance, **kwargs):
+def post_delete_breakfast(sender, instance, **kwargs):
     """Anticipate every breakfasts that are after the instance date by a week
     """
     q = Breakfast.objects.filter(date__gt=instance.date)
