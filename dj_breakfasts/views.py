@@ -60,7 +60,7 @@ class BreakfastCreateView(CreateView):
 
 class BreakfastUpdateView(UpdateView):
     model = Breakfast
-    fields = "__all__"
+    form_class = BreakfastForm
     
     def get_success_url(self, **kwargs):         
         return reverse_lazy('dj-breakfasts:detail', args = (self.object.id,))
@@ -105,8 +105,9 @@ class ParticipantUpdateView(UpdateView):
     def get_success_url(self, **kwargs):         
         return reverse_lazy('dj-breakfasts:participant-detail', args = (self.object.id,))
 
-class ParticipantDeleteView(DeleteView):
+class ParticipantDeactivateView(DeleteView):
     model = Participant
+    template_name = "dj_breakfasts/participant_confirm_deactivate.html"
     
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()

@@ -21,4 +21,4 @@ class BreakfastForm(forms.ModelForm):
         
     class Meta:
         model = Breakfast
-        fields = "__all__"
+        fields = [ 'date', 'participant' ]

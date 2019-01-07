@@ -1,0 +1,8 @@
+Hye {{ first_name }},
+
+On date of {{ date }}, it will be your turn to buy the breakfast for the whole team.
+
+Have a great day.
+
+--
+The whole team

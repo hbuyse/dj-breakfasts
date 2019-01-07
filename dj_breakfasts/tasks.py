@@ -11,6 +11,5 @@ logger = get_task_logger(__name__)
 
 @shared_task
 def send_deferred_mail_task(recipient, first_name, date):
-    logger.info("Sending breakfast email to {}".format(recipient))
     return send_deferred_mail(recipient, first_name, date)
 

@@ -49,8 +49,8 @@ urlpatterns = [
          name="participant-update"
          ),
     path("participants/<int:pk>/delete/",
-         view=views.ParticipantDeleteView.as_view(),
-         name="participant-delete"
+         view=views.ParticipantDeactivateView.as_view(),
+         name="participant-deactivate"
          ),
     path("participants/",
          view=views.ParticipantListView.as_view(),

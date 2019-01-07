@@ -24,7 +24,7 @@
         <a class="btn btn-primary" href="{% url 'dj-breakfasts:participant-update' participant.id %}">Update</a>
       {% endif %}
       {% if perms.dj_breakfasts.delete_participant %}
-        <a class="btn btn-danger" href="{% url 'dj-breakfasts:participant-delete' participant.id %}">Delete</a>
+        <a class="btn btn-danger" href="{% url 'dj-breakfasts:participant-deactivate' participant.id %}">Deactivate</a>
       {% endif %}
     </div>
   {% endif %}
