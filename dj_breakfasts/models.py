@@ -8,8 +8,6 @@ from django.core.validators import RegexValidator
 from django.template.loader import render_to_string, get_template
 from django.utils.translation import gettext_lazy as _
 
-from .tasks import send_deferred_mail_task
-
 class Participant(models.Model):
 
     first_name = models.CharField(_('First name'), max_length=128)
