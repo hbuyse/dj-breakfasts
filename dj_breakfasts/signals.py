@@ -6,7 +6,7 @@ from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 
 from .models import Breakfast, Participant
-from .tasks import send_deferred_mail_task
+from .tasks import send_deferred_mail_and_create_new_breakfast_task
 
 import logging
 from datetime import datetime, date, timedelta
@@ -46,10 +46,9 @@ def pre_save_breakfast(sender, instance, **kwargs):
             revoke(instance.email_task_id, terminate=True)
             logger.debug("Revoke email send task (id: {})".format(instance.email_task_id))
 
-        task = send_deferred_mail_task.apply_async(
+        task = send_deferred_mail_and_create_new_breakfast_task.apply_async(
                     (
-                        instance.participant.email,
-                        instance.participant.first_name,
+                        instance.participant.pk,
                         email_date
                     ),
                     countdown=(email_date - date.today()) / timedelta(seconds=1)
