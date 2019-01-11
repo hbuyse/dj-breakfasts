@@ -1,4 +1,4 @@
-##Example Project for dj_breakfasts
+##Example Project for breakfasts
 
 This example is provided as a convenience feature to allow potential users to try the app straight from the app repo without having to create a django project.
 

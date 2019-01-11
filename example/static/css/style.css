@@ -3,9 +3,9 @@ body {
 }
 
 .vcenter {
-    display: inline-block;
+    display       : inline-block;
     vertical-align: middle;
-    float: none;
+    float         : none;
 }
 
 .justify {
@@ -21,10 +21,10 @@ body {
 }
 
 .sponsor-img {
-    display: block;
-    margin-left: auto;
+    display     : block;
+    margin-left : auto;
     margin-right: auto;
-    width: 90%;
+    width       : 90%;
     /*margin-bottom:5px;*/
 }
 
