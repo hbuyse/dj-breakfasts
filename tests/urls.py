@@ -9,6 +9,5 @@ from django.urls import path
 
 
 urlpatterns = [
-    # path('breakfasts/', include('breakfasts.urls')),
-    path('gymnasiums/', include('gymnasiums.urls')),
+    path('', include('breakfasts.urls')),
 ]
