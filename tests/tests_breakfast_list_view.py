@@ -17,7 +17,7 @@ class TestBreakfastListViewAsAnonymous(TestCase):
 
     def tests_list_view_empty(self):
         """Tests."""
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 0)
@@ -34,7 +34,7 @@ class TestBreakfastListViewAsAnonymous(TestCase):
             capacity=456
         )
 
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 1)
@@ -52,7 +52,7 @@ class TestBreakfastListViewAsAnonymous(TestCase):
                 capacity=456
             )
 
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 10)
@@ -77,7 +77,7 @@ class TestBreakfastListViewAsLogged(TestCase):
     def tests_list_view_empty(self):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 0)
@@ -95,7 +95,7 @@ class TestBreakfastListViewAsLogged(TestCase):
         )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 1)
@@ -114,7 +114,7 @@ class TestBreakfastListViewAsLogged(TestCase):
             )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 10)
@@ -137,7 +137,7 @@ class TestBreakfastListViewAsStaff(TestCase):
     def tests_list_view_empty(self):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 0)
@@ -155,7 +155,7 @@ class TestBreakfastListViewAsStaff(TestCase):
         )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 1)
@@ -174,7 +174,7 @@ class TestBreakfastListViewAsStaff(TestCase):
             )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 10)
@@ -197,7 +197,7 @@ class TestBreakfastListViewAsSuperuser(TestCase):
     def tests_list_view_empty(self):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 0)
@@ -215,7 +215,7 @@ class TestBreakfastListViewAsSuperuser(TestCase):
         )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 1)
@@ -234,7 +234,7 @@ class TestBreakfastListViewAsSuperuser(TestCase):
             )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:list'))
+        r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 10)

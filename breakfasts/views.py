@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 from django.views.generic.dates import YearArchiveView
@@ -46,7 +46,7 @@ class BreakfastDetailView(DetailView):
 
 class BreakfastCreateView(LoginRequiredMixin, CreateView):
     model = Breakfast
-    success_url = reverse_lazy('breakfasts:next')
+    success_url = reverse('breakfasts:next')
     form_class = BreakfastForm
 
 class BreakfastUpdateView(LoginRequiredMixin, UpdateView):
@@ -54,13 +54,13 @@ class BreakfastUpdateView(LoginRequiredMixin, UpdateView):
     form_class = BreakfastForm
     
     def get_success_url(self, **kwargs):         
-        return reverse_lazy('breakfasts:detail', args = (self.object.id,))
+        return reverse('breakfasts:detail', args = (self.object.id,))
 
 class BreakfastDeleteView(LoginRequiredMixin, DeleteView):
     model = Breakfast
     
     def get_success_url(self, **kwargs):         
-        return reverse_lazy('breakfasts:next')
+        return reverse('breakfasts:next')
 
 class ParticipantListView(ListView):
     model = Participant
@@ -84,7 +84,7 @@ class ParticipantCreateView(LoginRequiredMixin, CreateView):
         ]
     
     def get_success_url(self, **kwargs):
-        return reverse_lazy('breakfasts:participant-detail', args = (self.object.id,))
+        return reverse('breakfasts:participant-detail', args = (self.object.id,))
 
 class ParticipantUpdateView(LoginRequiredMixin, UpdateView):
     model = Participant
@@ -94,7 +94,7 @@ class ParticipantUpdateView(LoginRequiredMixin, UpdateView):
         ]
     
     def get_success_url(self, **kwargs):         
-        return reverse_lazy('breakfasts:participant-detail', args = (self.object.id,))
+        return reverse('breakfasts:participant-detail', args = (self.object.id,))
 
 class ParticipantDeactivateView(LoginRequiredMixin, DeleteView):
     model = Participant
@@ -108,4 +108,4 @@ class ParticipantDeactivateView(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(self.get_success_url())
     
     def get_success_url(self, **kwargs):         
-        return reverse_lazy('breakfasts:participant-list')
+        return reverse('breakfasts:participant-list')
