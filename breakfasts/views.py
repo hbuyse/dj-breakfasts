@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 from django.views.generic.dates import YearArchiveView
@@ -46,7 +46,7 @@ class BreakfastDetailView(DetailView):
 
 class BreakfastCreateView(LoginRequiredMixin, CreateView):
     model = Breakfast
-    success_url = reverse('breakfasts:next')
+    success_url = reverse_lazy('breakfasts:next')
     form_class = BreakfastForm
 
 class BreakfastUpdateView(LoginRequiredMixin, UpdateView):
