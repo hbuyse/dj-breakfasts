@@ -38,7 +38,7 @@ class BreakfastListView(ListView):
             q = Breakfast.objects.filter(date__lte=datetime.today()).order_by("date")
         else:
             q = Breakfast.objects.filter(date__gt=datetime.today()).order_by("-date")
-        
+
         return q
 
 class BreakfastDetailView(DetailView):
@@ -52,14 +52,14 @@ class BreakfastCreateView(LoginRequiredMixin, CreateView):
 class BreakfastUpdateView(LoginRequiredMixin, UpdateView):
     model = Breakfast
     form_class = BreakfastForm
-    
-    def get_success_url(self, **kwargs):         
+
+    def get_success_url(self, **kwargs):
         return reverse('breakfasts:detail', args = (self.object.id,))
 
 class BreakfastDeleteView(LoginRequiredMixin, DeleteView):
     model = Breakfast
-    
-    def get_success_url(self, **kwargs):         
+
+    def get_success_url(self, **kwargs):
         return reverse('breakfasts:next')
 
 class ParticipantListView(ListView):
@@ -82,7 +82,7 @@ class ParticipantCreateView(LoginRequiredMixin, CreateView):
         'last_name',
         'email'
         ]
-    
+
     def get_success_url(self, **kwargs):
         return reverse('breakfasts:participant-detail', args = (self.object.id,))
 
@@ -92,20 +92,20 @@ class ParticipantUpdateView(LoginRequiredMixin, UpdateView):
         'last_name',
         'email'
         ]
-    
-    def get_success_url(self, **kwargs):         
+
+    def get_success_url(self, **kwargs):
         return reverse('breakfasts:participant-detail', args = (self.object.id,))
 
 class ParticipantDeactivateView(LoginRequiredMixin, DeleteView):
     model = Participant
     template_name = "breakfasts/participant_confirm_deactivate.html"
-    
+
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.is_active = False
         self.object.save()
 
         return HttpResponseRedirect(self.get_success_url())
-    
-    def get_success_url(self, **kwargs):         
+
+    def get_success_url(self, **kwargs):
         return reverse('breakfasts:participant-list')

@@ -37,7 +37,7 @@ class BreakfastAdmin(admin.ModelAdmin):
             tmp = queryset[0].date
             queryset[0].date = queryset[1].date
             queryset[1].date = tmp
-            queryset[0].save()            
+            queryset[0].save()
             queryset[1].save()
 
 

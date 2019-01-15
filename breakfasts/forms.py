@@ -14,7 +14,7 @@ class BreakfastForm(forms.ModelForm):
 
     """
     participant = forms.ModelChoiceField(queryset=Participant.objects, empty_label=None)
-        
+
     class Meta:
         model = Breakfast
         widgets = {

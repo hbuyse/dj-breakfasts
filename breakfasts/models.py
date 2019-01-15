@@ -29,10 +29,10 @@ class Participant(models.Model):
         verbose_name = _("participant")
         verbose_name_plural = _("participants")
         ordering = ("first_name", "last_name")
-    
+
     def get_past_breakfast(self):
         return self.breakfast_set.filter(date__lte=datetime.today()).order_by("-date")
-    
+
     def get_future_breakfast(self):
         return self.breakfast_set.filter(date__gt=datetime.today()).order_by("date")
 
