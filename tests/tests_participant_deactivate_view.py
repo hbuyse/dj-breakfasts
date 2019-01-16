@@ -12,7 +12,7 @@ from breakfasts.models import (
 )
 
 
-class TestVcnAccountDeleteViewAsAnonymous(TestCase):
+class TestVcnAccountDeactivateViewAsAnonymous(TestCase):
     """Tests."""
 
     def setUp(self):
@@ -36,9 +36,11 @@ class TestVcnAccountDeleteViewAsAnonymous(TestCase):
 
         self.assertEqual(r.status_code, 302)
         self.assertEqual(r.url, '/accounts/login/?next=/participants/{}/deactivate/'.format(self.participant.id))
+        participant = Participant.objects.get(id=self.participant.id)
+        self.assertTrue(participant.is_active)
 
 
-class TestVcnAccountDeleteViewAsLogged(TestCase):
+class TestVcnAccountDeactivateViewAsLogged(TestCase):
     """Tests."""
 
     def setUp(self):
@@ -66,10 +68,14 @@ class TestVcnAccountDeleteViewAsLogged(TestCase):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
         r = self.client.post(reverse('breakfasts:participant-deactivate', kwargs={'pk': self.participant.id}))
+
         self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.url, reverse('breakfasts:participant-list'))
+        participant = Participant.objects.get(id=self.participant.id)
+        self.assertFalse(participant.is_active)
 
 
-class TestVcnAccountDeleteViewAsStaff(TestCase):
+class TestVcnAccountDeactivateViewAsStaff(TestCase):
     """Tests."""
 
     def setUp(self):
@@ -101,9 +107,12 @@ class TestVcnAccountDeleteViewAsStaff(TestCase):
         r = self.client.post(reverse('breakfasts:participant-deactivate', kwargs={'pk': self.participant.id}))
 
         self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.url, reverse('breakfasts:participant-list'))
+        participant = Participant.objects.get(id=self.participant.id)
+        self.assertFalse(participant.is_active)
 
 
-class TestVcnAccountDeleteViewAsSuperuser(TestCase):
+class TestVcnAccountDeactivateViewAsSuperuser(TestCase):
     """Tests."""
 
     def setUp(self):
@@ -135,3 +144,6 @@ class TestVcnAccountDeleteViewAsSuperuser(TestCase):
         r = self.client.post(reverse('breakfasts:participant-deactivate', kwargs={'pk': self.participant.id}))
 
         self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.url, reverse('breakfasts:participant-list'))
+        participant = Participant.objects.get(id=self.participant.id)
+        self.assertFalse(participant.is_active)

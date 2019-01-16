@@ -8,12 +8,30 @@ from django.test import TestCase
 from django.urls import reverse
 
 from breakfasts.models import (
-    Breakfast
+    Breakfast,
+    Participant
 )
 
 
+from datetime import date, timedelta
+
 class TestBreakfastListViewAsAnonymous(TestCase):
     """Tests ListView for Post."""
+
+    # @classmethod
+    # def setUpTestData(cls):
+    #     cls.participant = Participant.objects.create(
+    #         first_name="first_name",
+    #         last_name="last_name",
+    #         email="email@email.com"
+    #     )
+
+    def setUp(self):
+        self.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
+        )
 
     def tests_list_view_empty(self):
         """Tests."""
@@ -22,16 +40,11 @@ class TestBreakfastListViewAsAnonymous(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 0)
 
-    def tests_list_view_one_Breakfast(self):
+    def tests_list_view_one_breakfast(self):
         """Tests."""
         Breakfast.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+            participant=self.participant,
+            date=date.today() + timedelta(days=1)
         )
 
         r = self.client.get(reverse('breakfasts:next'))
@@ -39,17 +52,12 @@ class TestBreakfastListViewAsAnonymous(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 1)
 
-    def tests_list_view_multiple_Breakfasts(self):
+    def tests_list_view_multiple_breakfasts(self):
         """Tests."""
-        for i in range(0, 10):
+        for i in range(1, 11):
             Breakfast.objects.create(
-                name='Watteau',
-                address='37 rue Lequesne',
-                city='Nogent-Sur-Marne',
-                zip_code=94130,
-                phone='0100000000',
-                surface=123,
-                capacity=456
+                participant=self.participant,
+                date=date.today() + timedelta(days=i)
             )
 
         r = self.client.get(reverse('breakfasts:next'))
@@ -73,6 +81,11 @@ class TestBreakfastListViewAsLogged(TestCase):
             'last_name': "Buyse"
         }
         self.user = get_user_model().objects.create_user(**self.dict)
+        self.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
+        )
 
     def tests_list_view_empty(self):
         """Tests."""
@@ -82,7 +95,7 @@ class TestBreakfastListViewAsLogged(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 0)
 
-    def tests_list_view_one_Breakfast(self):
+    def tests_list_view_one_breakfast(self):
         """Tests."""
         Breakfast.objects.create(
             name='Watteau',
@@ -100,7 +113,7 @@ class TestBreakfastListViewAsLogged(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 1)
 
-    def tests_list_view_multiple_Breakfasts(self):
+    def tests_list_view_multiple_breakfasts(self):
         """Tests."""
         for i in range(0, 10):
             Breakfast.objects.create(
@@ -133,6 +146,11 @@ class TestBreakfastListViewAsStaff(TestCase):
             'is_staff': True
         }
         self.staff = get_user_model().objects.create_user(**self.dict)
+        self.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
+        )
 
     def tests_list_view_empty(self):
         """Tests."""
@@ -142,7 +160,7 @@ class TestBreakfastListViewAsStaff(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 0)
 
-    def tests_list_view_one_Breakfast(self):
+    def tests_list_view_one_breakfast(self):
         """Tests."""
         Breakfast.objects.create(
             name='Watteau',
@@ -160,7 +178,7 @@ class TestBreakfastListViewAsStaff(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 1)
 
-    def tests_list_view_multiple_Breakfasts(self):
+    def tests_list_view_multiple_breakfasts(self):
         """Tests."""
         for i in range(0, 10):
             Breakfast.objects.create(
@@ -193,6 +211,11 @@ class TestBreakfastListViewAsSuperuser(TestCase):
             'email': 'toto@example.com'
         }
         self.superuser = get_user_model().objects.create_superuser(**self.dict)
+        self.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
+        )
 
     def tests_list_view_empty(self):
         """Tests."""
@@ -202,7 +225,7 @@ class TestBreakfastListViewAsSuperuser(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 0)
 
-    def tests_list_view_one_Breakfast(self):
+    def tests_list_view_one_breakfast(self):
         """Tests."""
         Breakfast.objects.create(
             name='Watteau',
@@ -220,7 +243,7 @@ class TestBreakfastListViewAsSuperuser(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(len(r.context['breakfast_list']), 1)
 
-    def tests_list_view_multiple_Breakfasts(self):
+    def tests_list_view_multiple_breakfasts(self):
         """Tests."""
         for i in range(0, 10):
             Breakfast.objects.create(

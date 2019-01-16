@@ -78,20 +78,22 @@ class ParticipantDetailView(DetailView):
 
 class ParticipantCreateView(LoginRequiredMixin, CreateView):
     model = Participant
-    fields = ['first_name',
+    fields = [
+        'first_name',
         'last_name',
         'email'
-        ]
+    ]
 
     def get_success_url(self, **kwargs):
         return reverse('breakfasts:participant-detail', args = (self.object.id,))
 
 class ParticipantUpdateView(LoginRequiredMixin, UpdateView):
     model = Participant
-    fields = ['first_name',
+    fields = [
+        'first_name',
         'last_name',
         'email'
-        ]
+    ]
 
     def get_success_url(self, **kwargs):
         return reverse('breakfasts:participant-detail', args = (self.object.id,))
