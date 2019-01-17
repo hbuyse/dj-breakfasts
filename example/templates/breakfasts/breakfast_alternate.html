@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block path %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'breakfasts:next' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'breakfasts:next' %}">Breakfasts</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Alternate</a></li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block page_title %}
+  Alternate breakfasts
+{% endblock %}
+
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
+    {% bootstrap_button "Reset" button_type="reset" button_class="btn-warning" %}
+  </form>
+{% endblock %}

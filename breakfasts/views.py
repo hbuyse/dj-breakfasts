@@ -3,6 +3,7 @@
 """Views."""
 
 # Standard library
+import logging
 from datetime import datetime
 
 # Django
@@ -10,12 +11,17 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
+from django.views import View
+from django.views.generic import FormView
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 # Local Django
-from breakfasts.forms import BreakfastForm
+from breakfasts.forms import BreakfastForm, BreakfastAlternateForm
 from breakfasts.models import Breakfast, Participant
+
+logger = logging.getLogger(__name__)
 
 class BreakfastListView(ListView):
     past = False
@@ -55,6 +61,28 @@ class BreakfastDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self, **kwargs):
         return reverse('breakfasts:next')
+
+class BreakfastAlternateView(FormView):
+    """Page to alternate breakfasts between two participants."""
+    template_name = "breakfasts/breakfast_alternate.html"
+    form_class = BreakfastAlternateForm
+
+    def form_valid(self, form):
+        """Alternate dates between two breakfasts."""
+        data = form.clean()
+        breakfast_list = data["breakfast_list"]
+        
+        breakfast_list[0].date, breakfast_list[1].date = breakfast_list[1].date, breakfast_list[0].date
+
+        for b in breakfast_list:
+            logger.info("Saving new date for breakfast {}".format(b.id))
+            b.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self, **kwargs):
+        return reverse('breakfasts:next')
+
 
 class ParticipantListView(ListView):
     model = Participant

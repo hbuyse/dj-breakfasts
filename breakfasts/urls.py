@@ -30,6 +30,10 @@ urlpatterns = [
          view=views.BreakfastCreateView.as_view(),
          name="create"
          ),
+    path("alternate/",
+         view=views.BreakfastAlternateView.as_view(),
+         name="alternate"
+         ),
     path("<int:pk>/",
          view=views.BreakfastDetailView.as_view(),
          name="detail"
