@@ -18,21 +18,6 @@ from datetime import date, timedelta
 class TestBreakfastListViewAsAnonymous(TestCase):
     """Tests ListView for Post."""
 
-    # @classmethod
-    # def setUpTestData(cls):
-    #     cls.participant = Participant.objects.create(
-    #         first_name="first_name",
-    #         last_name="last_name",
-    #         email="email@email.com"
-    #     )
-
-    def setUp(self):
-        self.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
-
     def tests_list_view_empty(self):
         """Tests."""
         r = self.client.get(reverse('breakfasts:next'))
@@ -42,9 +27,10 @@ class TestBreakfastListViewAsAnonymous(TestCase):
 
     def tests_list_view_one_breakfast(self):
         """Tests."""
-        Breakfast.objects.create(
-            participant=self.participant,
-            date=date.today() + timedelta(days=1)
+        participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
 
         r = self.client.get(reverse('breakfasts:next'))
@@ -54,9 +40,14 @@ class TestBreakfastListViewAsAnonymous(TestCase):
 
     def tests_list_view_multiple_breakfasts(self):
         """Tests."""
-        for i in range(1, 11):
+        participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
+        )
+        for i in range(1, 10):
             Breakfast.objects.create(
-                participant=self.participant,
+                participant=participant,
                 date=date.today() + timedelta(days=i)
             )
 
@@ -81,11 +72,6 @@ class TestBreakfastListViewAsLogged(TestCase):
             'last_name': "Buyse"
         }
         self.user = get_user_model().objects.create_user(**self.dict)
-        self.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
 
     def tests_list_view_empty(self):
         """Tests."""
@@ -97,14 +83,10 @@ class TestBreakfastListViewAsLogged(TestCase):
 
     def tests_list_view_one_breakfast(self):
         """Tests."""
-        Breakfast.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+        participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
@@ -115,15 +97,15 @@ class TestBreakfastListViewAsLogged(TestCase):
 
     def tests_list_view_multiple_breakfasts(self):
         """Tests."""
-        for i in range(0, 10):
+        participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
+        )
+        for i in range(1, 10):
             Breakfast.objects.create(
-                name='Watteau',
-                address='37 rue Lequesne',
-                city='Nogent-Sur-Marne',
-                zip_code=94130,
-                phone='0100000000',
-                surface=123,
-                capacity=456
+                participant=participant,
+                date=date.today() + timedelta(days=i)
             )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
@@ -146,11 +128,6 @@ class TestBreakfastListViewAsStaff(TestCase):
             'is_staff': True
         }
         self.staff = get_user_model().objects.create_user(**self.dict)
-        self.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
 
     def tests_list_view_empty(self):
         """Tests."""
@@ -162,14 +139,10 @@ class TestBreakfastListViewAsStaff(TestCase):
 
     def tests_list_view_one_breakfast(self):
         """Tests."""
-        Breakfast.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+        participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
@@ -180,15 +153,15 @@ class TestBreakfastListViewAsStaff(TestCase):
 
     def tests_list_view_multiple_breakfasts(self):
         """Tests."""
-        for i in range(0, 10):
+        participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
+        )
+        for i in range(1, 10):
             Breakfast.objects.create(
-                name='Watteau',
-                address='37 rue Lequesne',
-                city='Nogent-Sur-Marne',
-                zip_code=94130,
-                phone='0100000000',
-                surface=123,
-                capacity=456
+                participant=participant,
+                date=date.today() + timedelta(days=i)
             )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
@@ -211,11 +184,6 @@ class TestBreakfastListViewAsSuperuser(TestCase):
             'email': 'toto@example.com'
         }
         self.superuser = get_user_model().objects.create_superuser(**self.dict)
-        self.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
 
     def tests_list_view_empty(self):
         """Tests."""
@@ -227,14 +195,10 @@ class TestBreakfastListViewAsSuperuser(TestCase):
 
     def tests_list_view_one_breakfast(self):
         """Tests."""
-        Breakfast.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+        participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
@@ -245,15 +209,15 @@ class TestBreakfastListViewAsSuperuser(TestCase):
 
     def tests_list_view_multiple_breakfasts(self):
         """Tests."""
-        for i in range(0, 10):
+        participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
+        )
+        for i in range(1, 10):
             Breakfast.objects.create(
-                name='Watteau',
-                address='37 rue Lequesne',
-                city='Nogent-Sur-Marne',
-                zip_code=94130,
-                phone='0100000000',
-                surface=123,
-                capacity=456
+                participant=participant,
+                date=date.today() + timedelta(days=i)
             )
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
