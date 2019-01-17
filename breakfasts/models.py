@@ -14,12 +14,12 @@ from django.utils.translation import gettext_lazy as _
 
 class Participant(models.Model):
 
-    first_name = models.CharField(_('First name'), max_length=128)
-    last_name  = models.CharField(_('Last name'), max_length=128)
-    email = models.EmailField(_("Email"), max_length=254)
-    created = models.DateTimeField('Creation date', auto_now_add=True)
-    modified = models.DateTimeField('Last modification date', auto_now=True)
-    is_active = models.BooleanField(_("Is active"), default=True)
+    first_name = models.CharField(_('first name'), max_length=128)
+    last_name  = models.CharField(_('last name'), max_length=128)
+    email = models.EmailField(_("email"), max_length=254)
+    created = models.DateTimeField('creation date', auto_now_add=True)
+    modified = models.DateTimeField('last modification date', auto_now=True)
+    is_active = models.BooleanField(_("is active"), default=True)
 
     def __str__(self):
         """String representation."""
@@ -46,10 +46,10 @@ class Breakfast(models.Model):
     """Breakfast date"""
 
     participant = models.ForeignKey('Participant', on_delete=models.DO_NOTHING, unique_for_date="date")
-    date = models.DateField('Breakfast creation date')
-    created = models.DateTimeField('Breakfast creation date', auto_now_add=True)
-    modified = models.DateTimeField('Breakfast last modification date', auto_now=True)
-    email_task_id = models.CharField('Breakfast task_id', max_length=255)
+    date = models.DateField('breakfast creation date')
+    created = models.DateTimeField('breakfast creation date', auto_now_add=True)
+    modified = models.DateTimeField('breakfast last modification date', auto_now=True)
+    email_task_id = models.CharField('breakfast task_id', max_length=255)
 
     def __str__(self):
         """String representation."""
