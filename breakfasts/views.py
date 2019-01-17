@@ -2,6 +2,9 @@
 
 """Views."""
 
+from breakfasts.forms import BreakfastForm
+from breakfasts.models import Breakfast, Participant
+
 from datetime import datetime
 
 from django.contrib import messages
@@ -9,19 +12,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
-                                  UpdateView)
-from django.views.generic.dates import YearArchiveView
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView
+    )
 
-from breakfasts.forms import BreakfastForm
-from breakfasts.models import Breakfast, Participant
-
-
-class BreakfastYearArchiveView(YearArchiveView):
-    queryset = Breakfast.objects.all()
-    date_field = "date"
-    make_object_list = True
-    allow_future = True
 
 class BreakfastListView(ListView):
     past = False
