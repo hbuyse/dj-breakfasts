@@ -1,15 +1,20 @@
-#! /usr/bin/env python
+# -*- coding: utf-8
 
+# Standard library
 import logging
 from datetime import date, datetime, timedelta
 
+# Third-party
 from celery.task.control import revoke
+
+# Django
 from django.conf import settings
 from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
 
-from .models import Breakfast, Participant
-from .tasks import send_deferred_mail_and_create_new_breakfast_task
+# Local Django
+from breakfasts.models import Breakfast, Participant
+from breakfasts.tasks import send_deferred_mail_and_create_new_breakfast_task
 
 logger = logging.getLogger(__name__)
 

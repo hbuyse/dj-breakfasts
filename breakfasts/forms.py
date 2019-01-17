@@ -1,11 +1,10 @@
-from django import forms
-from django.forms.models import inlineformset_factory
-from django.forms.widgets import SelectDateWidget
-from django.utils import timezone
-from django.utils.translation import ugettext as _
+# -*- coding: utf-8
 
-from .models import Breakfast, Participant
-from .tasks import send_deferred_mail
+# Django
+from django import forms
+
+# Local Django
+from breakfasts.models import Breakfast, Participant
 
 
 class BreakfastForm(forms.ModelForm):
@@ -13,7 +12,6 @@ class BreakfastForm(forms.ModelForm):
     Form for creating a new assignment for a course
 
     """
-    participant = forms.ModelChoiceField(queryset=Participant.objects, empty_label=None)
 
     class Meta:
         model = Breakfast
@@ -22,3 +20,7 @@ class BreakfastForm(forms.ModelForm):
             "date": forms.DateInput(attrs={"class": "datepicker"}),
             }
         fields = [ 'date', 'participant' ]
+
+class BreakfastAlternateForm(forms.Form):
+    """Form to alternate participants between two breakfasts."""
+    breakfast_list = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,label="Notify and subscribe users to this post:")

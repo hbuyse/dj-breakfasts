@@ -1,12 +1,15 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 """urls for the breakfasts package."""
 
+# Standard library
 from datetime import datetime
 
+# Django
 from django.urls import path, reverse
 from django.views.generic.base import RedirectView
 
+# Local Django
 from breakfasts import views
 
 app_name = 'breakfasts'

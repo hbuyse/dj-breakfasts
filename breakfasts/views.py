@@ -1,25 +1,21 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 """Views."""
 
-from breakfasts.forms import BreakfastForm
-from breakfasts.models import Breakfast, Participant
-
+# Standard library
 from datetime import datetime
 
+# Django
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView
-    )
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
+# Local Django
+from breakfasts.forms import BreakfastForm
+from breakfasts.models import Breakfast, Participant
 
 class BreakfastListView(ListView):
     past = False

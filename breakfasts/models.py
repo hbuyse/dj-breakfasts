@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """Django Breakfast model implementation."""
 
+# Standard library
 from datetime import datetime, timedelta
 
+# Django
 from django.core.mail import EmailMessage
 from django.core.validators import RegexValidator
 from django.db import models

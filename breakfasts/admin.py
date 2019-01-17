@@ -1,11 +1,14 @@
+# -*- coding: utf-8
 """..."""
 
+# standard library
 from datetime import timedelta
 
+# Django
 from django.contrib import admin
 
-# Register your models here.
-from .models import Breakfast, Participant
+# Local Django
+from breakfasts.models import Breakfast, Participant
 
 
 @admin.register(Breakfast)

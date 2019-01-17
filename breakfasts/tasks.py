@@ -1,15 +1,22 @@
-# Create your tasks here
+# -*- coding: utf-8 -*-
+
+# future
 from __future__ import absolute_import, unicode_literals
 
+# Standard library
 from datetime import timedelta
 
+# Third-party
 from celery import shared_task
 from celery.utils.log import get_task_logger
+
+# Django
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
-from .emails import send_deferred_mail
-from .models import Breakfast, Participant
+# Local Django
+from breakfasts.emails import send_deferred_mail
+from breakfasts.models import Breakfast, Participant
 
 logger = get_task_logger(__name__)
 
