@@ -29,7 +29,7 @@ def post_save_participant(sender, instance, **kwargs):
     # Add the first breakfast date for a newly created participant.
     if kwargs['created']:
         last_breakfast = Breakfast.objects.last()
-        next_friday = date.today() + timedelta( (4-date.today().weekday()) % 7 )
+        next_friday = date.today() + timedelta( (settings.BREAKFAST_DAY - date.today().weekday()) % 7 )
         b = Breakfast.objects.create(
                 participant=instance,
                 date=next_friday if last_breakfast is None else last_breakfast.date + timedelta(weeks=1)
@@ -60,7 +60,11 @@ def pre_save_breakfast(sender, instance, **kwargs):
                     )
 
         instance.email_task_id = task.id
-        logger.info("Breakfast on the date of {} will be payed by {} {}.".format(instance.date, instance.participant.first_name, instance.participant.last_name))
+        logger.info("Breakfast on the date of {} will be payed by {} {}.".format(
+            instance.date,
+            instance.participant.first_name,
+            instance.participant.last_name)
+        )
         logger.info("An email (task_id: {}) will be send the {}".format(instance.email_task_id, email_date))
 
 @receiver(post_delete, sender=Breakfast)
