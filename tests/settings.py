@@ -60,3 +60,7 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
+
+# Day of breakfasts
+# Check https://docs.python.org/3/library/datetime.html#datetime.date.weekday to get the list of the day
+BREAKFAST_DAY = 4       # Friday
