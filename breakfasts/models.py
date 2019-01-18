@@ -11,6 +11,7 @@ from django.db import models
 from django.template.loader import get_template, render_to_string
 from django.utils.translation import gettext_lazy as _
 
+from breakfasts.validators import date_is_future
 
 class Participant(models.Model):
 
@@ -46,10 +47,10 @@ class Breakfast(models.Model):
     """Breakfast date"""
 
     participant = models.ForeignKey('Participant', on_delete=models.DO_NOTHING, unique_for_date="date")
-    date = models.DateField('breakfast creation date')
+    date = models.DateField('breakfast creation date', validators=[date_is_future])
     created = models.DateTimeField('breakfast creation date', auto_now_add=True)
     modified = models.DateTimeField('breakfast last modification date', auto_now=True)
-    email_task_id = models.CharField('breakfast task_id', max_length=255)
+    email_task_id = models.CharField('breakfast task_id', max_length=255, editable=True)
 
     def __str__(self):
         """String representation."""

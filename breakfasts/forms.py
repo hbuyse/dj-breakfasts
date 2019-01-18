@@ -2,10 +2,12 @@
 
 # Standard library
 import logging
-from datetime import datetime
+from datetime import datetime, date
 
 # Django
-from django.forms import ModelForm, ModelChoiceField, Form, ModelMultipleChoiceField, CheckboxSelectMultiple, ValidationError, DateInput
+from django.forms import (
+    ModelForm, ModelChoiceField, Form, ModelMultipleChoiceField, CheckboxSelectMultiple, ValidationError, DateInput
+)
 
 # Local Django
 from breakfasts.models import Breakfast, Participant
@@ -23,6 +25,16 @@ class BreakfastForm(ModelForm):
             "date": DateInput(attrs={"class": "datepicker"}),
             }
         fields = [ 'date', 'participant' ]
+
+    # def clean(self):
+    #     cleaned_data = super().clean()
+
+    #     if "date" not in cleaned_data:
+    #         raise ValidationError("date not in cleaned_data")
+    #     elif cleaned_data["date"] < date.today():
+    #         raise ValidationError("Breakfast date cannot be in the past")
+
+    #     return cleaned_data
 
 class BreakfastAlternateForm(Form):
     """Form to alternate participants between two breakfasts."""

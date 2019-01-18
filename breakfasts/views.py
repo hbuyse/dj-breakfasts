@@ -46,8 +46,10 @@ class BreakfastDetailView(DetailView):
 
 class BreakfastCreateView(LoginRequiredMixin, CreateView):
     model = Breakfast
-    success_url = reverse_lazy('breakfasts:next')
     form_class = BreakfastForm
+
+    def get_success_url(self):
+        return reverse('breakfasts:detail', args = (self.object.id,))
 
 
 class BreakfastUpdateView(LoginRequiredMixin, UpdateView):

@@ -6,7 +6,7 @@
 from datetime import date, timedelta
 
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from breakfasts.models import (
@@ -14,7 +14,7 @@ from breakfasts.models import (
     Participant
 )
 
-@override_settings(BREAKFAST_DAY=date.today().weekday())
+@override_settings(BREAKFAST_DAY=date.today().weekday() + 1)
 class TestBreakfastListViewAsAnonymous(TestCase):
     """Tests ListView for Post."""
 
@@ -61,7 +61,7 @@ class TestBreakfastListViewAsAnonymous(TestCase):
         self.assertEqual(len(r.context['breakfast_list']), 10)
 
 
-@override_settings(BREAKFAST_DAY=date.today().weekday())
+@override_settings(BREAKFAST_DAY=date.today().weekday() + 1)
 class TestBreakfastListViewAsLogged(TestCase):
     """Tests ListView for Post.
 
@@ -124,7 +124,7 @@ class TestBreakfastListViewAsLogged(TestCase):
         self.assertEqual(len(r.context['breakfast_list']), 10)
 
 
-@override_settings(BREAKFAST_DAY=date.today().weekday())
+@override_settings(BREAKFAST_DAY=date.today().weekday() + 1)
 class TestBreakfastListViewAsStaff(TestCase):
     """Tests ListView for Post."""
 
@@ -185,7 +185,7 @@ class TestBreakfastListViewAsStaff(TestCase):
         self.assertEqual(len(r.context['breakfast_list']), 10)
 
 
-@override_settings(BREAKFAST_DAY=date.today().weekday())
+@override_settings(BREAKFAST_DAY=date.today().weekday() + 1)
 class TestBreakfastListViewAsSuperuser(TestCase):
     """Tests ListView for Post."""
 

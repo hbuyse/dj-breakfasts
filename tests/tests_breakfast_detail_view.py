@@ -15,16 +15,12 @@ from gymnasiums.models import (
 class TestVcnAccountDetailViewAsAnonymous(TestCase):
     """Tests."""
 
-    def setUp(self):
-        """Tests."""
-        self.gymnasium = Gymnasium.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+    @classmethod
+    def setUpTestData(cls):
+        cls.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
 
     def test_get(self):
@@ -36,23 +32,20 @@ class TestVcnAccountDetailViewAsAnonymous(TestCase):
 class TestVcnAccountDetailViewAsLogged(TestCase):
     """Tests."""
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """Setup for al the following tests."""
-        self.dict = {
+        cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
             'first_name': "Henri",
             'last_name': "Buyse"
         }
-        self.user = get_user_model().objects.create_user(**self.dict)
-        self.gymnasium = Gymnasium.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+        cls.user = get_user_model().objects.create_user(**cls.dict)
+        cls.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
 
     def test_get(self):
@@ -64,24 +57,21 @@ class TestVcnAccountDetailViewAsLogged(TestCase):
 class TestVcnAccountDetailViewAsStaff(TestCase):
     """Tests."""
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """Tests."""
-        self.dict = {
+        cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
             'first_name': "Henri",
             'last_name': "Buyse",
             'is_staff': True
         }
-        self.staff = get_user_model().objects.create_user(**self.dict)
-        self.gymnasium = Gymnasium.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+        cls.staff = get_user_model().objects.create_user(**cls.dict)
+        cls.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
 
     def test_get(self):
@@ -95,24 +85,21 @@ class TestVcnAccountDetailViewAsStaff(TestCase):
 class TestVcnAccountDetailViewAsSuperuser(TestCase):
     """Tests."""
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """Tests."""
-        self.dict = {
+        cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
             'first_name': "Henri",
             'last_name': "Buyse",
             'email': 'toto@example.com'
         }
-        self.superuser = get_user_model().objects.create_superuser(**self.dict)
-        self.gymnasium = Gymnasium.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+        cls.superuser = get_user_model().objects.create_superuser(**cls.dict)
+        cls.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
 
     def test_get(self):
