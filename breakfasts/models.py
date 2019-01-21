@@ -50,7 +50,7 @@ class Breakfast(models.Model):
     date = models.DateField('breakfast creation date', validators=[date_is_future])
     created = models.DateTimeField('breakfast creation date', auto_now_add=True)
     modified = models.DateTimeField('breakfast last modification date', auto_now=True)
-    email_task_id = models.CharField('breakfast task_id', max_length=255, editable=True)
+    email_task_id = models.CharField('breakfast task_id', max_length=255, editable=False, blank=True)
 
     def __str__(self):
         """String representation."""

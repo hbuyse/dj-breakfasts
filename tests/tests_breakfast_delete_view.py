@@ -4,144 +4,142 @@
 """Tests the views."""
 
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from gymnasiums.models import (
-    Gymnasium
-)
+from breakfasts.models import Breakfast, Participant
 
-
-class TestVcnAccountDeleteViewAsAnonymous(TestCase):
+@override_settings(LOGIN_URL="/toto/")
+class TestBreakfastDeleteViewAsAnonymous(TestCase):
     """Tests."""
 
-    def setUp(self):
-        """Tests."""
-        self.gymnasium = Gymnasium.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+    @classmethod
+    def setUpTestData(cls):
+        cls.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
+        cls.breakfast = cls.participant.breakfast_set.last()
 
     def test_get(self):
         """Tests."""
-        r = self.client.get(reverse('gymnasiums:delete', kwargs={'pk': self.gymnasium.id}))
-        self.assertEqual(r.status_code, 403)
+        r = self.client.get(reverse('breakfasts:delete', kwargs={'pk': self.breakfast.id}))
+        self.assertEqual(r.status_code, 302)
+        self.assertIn("/toto/", r.url)
 
     def test_post(self):
         """Tests."""
-        r = self.client.post(reverse('gymnasiums:delete', kwargs={'pk': self.gymnasium.id}))
-        self.assertEqual(r.status_code, 403)
+        r = self.client.post(reverse('breakfasts:delete', kwargs={'pk': self.breakfast.id}))
+        self.assertEqual(r.status_code, 302)
+        self.assertIn("/toto/", r.url)
 
 
-class TestVcnAccountDeleteViewAsLogged(TestCase):
+class TestBreakfastDeleteViewAsLogged(TestCase):
     """Tests."""
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """Setup for al the following tests."""
-        self.dict = {
+        cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
             'first_name': "Henri",
             'last_name': "Buyse"
         }
-        self.user = get_user_model().objects.create_user(**self.dict)
-        self.gymnasium = Gymnasium.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+        cls.user = get_user_model().objects.create_user(**cls.dict)
+        cls.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
+        cls.breakfast = cls.participant.breakfast_set.last()
 
     def test_get(self):
         """Tests."""
-        r = self.client.get(reverse('gymnasiums:delete', kwargs={'pk': self.gymnasium.id}))
-        self.assertEqual(r.status_code, 403)
+        self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
+        r = self.client.get(reverse('breakfasts:delete', kwargs={'pk': self.breakfast.id}))
+
+        self.assertEqual(r.status_code, 200)
 
     def test_post(self):
         """Tests."""
-        r = self.client.post(reverse('gymnasiums:delete', kwargs={'pk': self.gymnasium.id}))
-        self.assertEqual(r.status_code, 403)
+        self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
+        r = self.client.post(reverse('breakfasts:delete', kwargs={'pk': self.breakfast.id}))
+
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.url, reverse('breakfasts:next'))
 
 
-class TestVcnAccountDeleteViewAsStaff(TestCase):
+class TestBreakfastDeleteViewAsStaff(TestCase):
     """Tests."""
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """Tests."""
-        self.dict = {
+        cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
             'first_name': "Henri",
             'last_name': "Buyse",
             'is_staff': True
         }
-        self.staff = get_user_model().objects.create_user(**self.dict)
-        self.gymnasium = Gymnasium.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+        cls.staff = get_user_model().objects.create_user(**cls.dict)
+        cls.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
+        cls.breakfast = cls.participant.breakfast_set.last()
 
     def test_get(self):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('gymnasiums:delete', kwargs={'pk': self.gymnasium.id}))
+        r = self.client.get(reverse('breakfasts:delete', kwargs={'pk': self.breakfast.id}))
 
         self.assertEqual(r.status_code, 200)
 
     def test_post(self):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.post(reverse('gymnasiums:delete', kwargs={'pk': self.gymnasium.id}))
+        r = self.client.post(reverse('breakfasts:delete', kwargs={'pk': self.breakfast.id}))
 
         self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.url, reverse('breakfasts:next'))
 
 
-class TestVcnAccountDeleteViewAsSuperuser(TestCase):
+class TestBreakfastDeleteViewAsSuperuser(TestCase):
     """Tests."""
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """Tests."""
-        self.dict = {
+        cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
             'first_name': "Henri",
             'last_name': "Buyse",
             'email': 'toto@example.com'
         }
-        self.superuser = get_user_model().objects.create_superuser(**self.dict)
-        self.gymnasium = Gymnasium.objects.create(
-            name='Watteau',
-            address='37 rue Lequesne',
-            city='Nogent-Sur-Marne',
-            zip_code=94130,
-            phone='0100000000',
-            surface=123,
-            capacity=456
+        cls.superuser = get_user_model().objects.create_superuser(**cls.dict)
+        cls.participant = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
         )
+        cls.breakfast = cls.participant.breakfast_set.last()
 
     def test_get(self):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('gymnasiums:delete', kwargs={'pk': self.gymnasium.id}))
+        r = self.client.get(reverse('breakfasts:delete', kwargs={'pk': self.breakfast.id}))
 
         self.assertEqual(r.status_code, 200)
 
     def test_post(self):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.post(reverse('gymnasiums:delete', kwargs={'pk': self.gymnasium.id}))
+        r = self.client.post(reverse('breakfasts:delete', kwargs={'pk': self.breakfast.id}))
 
         self.assertEqual(r.status_code, 302)
+        self.assertEqual(r.url, reverse('breakfasts:next'))

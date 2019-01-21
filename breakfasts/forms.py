@@ -26,16 +26,6 @@ class BreakfastForm(ModelForm):
             }
         fields = [ 'date', 'participant' ]
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-
-    #     if "date" not in cleaned_data:
-    #         raise ValidationError("date not in cleaned_data")
-    #     elif cleaned_data["date"] < date.today():
-    #         raise ValidationError("Breakfast date cannot be in the past")
-
-    #     return cleaned_data
-
 class BreakfastAlternateForm(Form):
     """Form to alternate participants between two breakfasts."""
     breakfast_list = ModelMultipleChoiceField(

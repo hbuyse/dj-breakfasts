@@ -67,7 +67,7 @@ class BreakfastDeleteView(LoginRequiredMixin, DeleteView):
         return reverse('breakfasts:next')
 
 
-class BreakfastAlternateView(FormView):
+class BreakfastAlternateView(LoginRequiredMixin, FormView):
     """Page to alternate breakfasts between two participants."""
     template_name = "breakfasts/breakfast_alternate.html"
     form_class = BreakfastAlternateForm

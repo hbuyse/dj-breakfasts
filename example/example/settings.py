@@ -70,8 +70,6 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'bootstrap4',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,10 +78,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'breakfasts',
-    'django_icons',
 
     # if your app has other dependencies that need to be added to the site
     # they should be added here
+    'django_icons',
+    'django_celery_results',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -252,3 +252,5 @@ EMAIL_HOST_USER="ADS.LOCAL\g179754"
 EMAIL_HOST_PASSWORD="Wy7h0G35!"
 
 BREAKFAST_DAY = 4
+
+CELERY_RESULT_BACKEND = 'django-db'

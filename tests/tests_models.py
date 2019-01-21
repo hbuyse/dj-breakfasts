@@ -37,6 +37,27 @@ class TestParticipantModel(TestCase):
         """Test the verbose name in plural."""
         self.assertEqual(str(Participant._meta.verbose_name_plural), "participants")
 
+    def test_get_past_breakfast(self):
+        p = Participant.objects.create(**self.dict)
+        self.assertEqual(len(p.get_past_breakfast()), 0)
+
+        for i in range(1, 11):
+            Breakfast.objects.create(participant=p, date=date.today() - timedelta(weeks=1))
+        self.assertEqual(len(p.get_past_breakfast()), 10)
+
+    def test_get_future_breakfast(self):
+        p = Participant.objects.create(**self.dict)
+        self.assertEqual(len(p.get_future_breakfast()), 1)
+
+        for i in range(1, 11):
+            Breakfast.objects.create(participant=p, date=date.today() + timedelta(weeks=1))
+        self.assertEqual(len(p.get_future_breakfast()), 11)
+
+    def test_get_next_breakfast(self):
+        p = Participant.objects.create(**self.dict)
+        self.assertEqual(p.get_next_breakfast(), Breakfast.objects.last())
+
+
 
 class TestBreakfastModel(TestCase):
     """Test post class model."""
