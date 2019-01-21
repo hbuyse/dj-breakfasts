@@ -45,7 +45,7 @@ class TestDateIsPresentOrFuture(TestCase):
 
     def test_present(self):
         """Test date_is_present_or_future validator now.
-        
+
         We add one second when using timezone because the test fails otherwise.
         """
         date_is_present_or_future(date.today())

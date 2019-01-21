@@ -34,9 +34,6 @@ class BreakfastAlternateForm(Form):
         label="Select two breakfasts to alternate the participants"
     )
 
-    class Meta:
-        model = Breakfast
-
     def clean(self):
         cleaned_data = super().clean()
 

@@ -22,7 +22,7 @@ class TestBreakfastCreateViewAsAnonymous(TestCase):
             last_name="last_name",
             email="email@email.com"
         )
-    
+
     def test_get(self):
         """Tests."""
         r = self.client.get(reverse('breakfasts:create'))
