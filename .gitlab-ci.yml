@@ -9,12 +9,6 @@ before_script:
   - python get-pip.py
   - pip install -r requirements/test.txt
 
-py34-django20:
-  image: python:3.4
-  stage: test
-  script:
-    - tox -e py34-django20
-
 py35-django20:
   image: python:3.5
   stage: test
@@ -38,6 +32,18 @@ py36-django21:
   stage: test
   script:
     - tox -e py36-django21
+
+py37-django20:
+  image: python:3.7
+  stage: test
+  script:
+    - tox -e py37-django20
+
+py37-django21:
+  image: python:3.7
+  stage: test
+  script:
+    - tox -e py37-django21
 
 flake8:
   image: python:3.6
