@@ -11,6 +11,7 @@ from django.forms import (
 
 # Local Django
 from breakfasts.models import Breakfast, Participant
+from breakfasts.validators import only_two_items_in_list
 
 logger = logging.getLogger(__name__)
 
@@ -31,15 +32,6 @@ class BreakfastAlternateForm(Form):
     breakfast_list = ModelMultipleChoiceField(
         queryset=Breakfast.objects.filter(date__gt=datetime.today()).order_by("date"),
         widget=CheckboxSelectMultiple,
-        label="Select two breakfasts to alternate the participants"
+        label="Select two breakfasts to alternate the participants",
+        validators=[only_two_items_in_list]
     )
-
-    def clean(self):
-        cleaned_data = super().clean()
-
-        if "breakfast_list" not in cleaned_data:
-            raise ValidationError("breakfast_list not in cleaned_data")
-        elif len(cleaned_data["breakfast_list"]) != 2:
-            raise ValidationError("You have to select two breakfast dates to alternate.")
-
-        return cleaned_data

@@ -9,10 +9,10 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils import timezone
 
-from breakfasts.validators import date_is_future, date_is_present_or_future
+from breakfasts.validators import date_is_future, date_is_present_or_future, only_two_items_in_list
 
 class TestDateIsFuture(TestCase):
-    """Test Participant model."""
+    """Test date_is_future validator."""
 
     def test_date_is_past(self):
         """Test date_is_future validator in the past."""
@@ -36,7 +36,7 @@ class TestDateIsFuture(TestCase):
 
 
 class TestDateIsPresentOrFuture(TestCase):
-    """Test Participant model."""
+    """Test date_is_present_or_future validator."""
 
     def test_past(self):
         """Test date_is_present_or_future validator in the past."""
@@ -60,3 +60,27 @@ class TestDateIsPresentOrFuture(TestCase):
         """Test date_is_present_or_future validator with a wrong type of value"""
         self.assertRaises(ValidationError, date_is_present_or_future, str())
         self.assertRaises(ValidationError, date_is_present_or_future, int())
+
+
+class TestOnlyTwoItemsInList(TestCase):
+    """Test only_two_items_in_list validator."""
+
+    def test_wrong_list_len(self):
+        """Test only_two_items_in_list validator with wrong list length."""
+        lists = [
+            [],
+            [1],
+            [1, 2, 3]
+        ]
+        for l in lists:
+            self.assertRaises(ValidationError, only_two_items_in_list, l)
+
+    def test_correct_list_len(self):
+        """Test only_two_items_in_list validator with correct list length."""
+        only_two_items_in_list([1, 2])
+
+    def test_wrong_type(self):
+        """Test only_two_items_in_list validator with a wrong type of value"""
+        types = [None, str(), dict(), int()]
+        for i_type in types:
+            self.assertRaises(ValidationError, only_two_items_in_list, i_type)

@@ -27,3 +27,11 @@ def date_is_present_or_future(value):
             raise ValidationError(_("The date entered must be today or greater."))
     else:
         raise ValidationError(_("The value entered isn't a valid type of date or datetime."))
+
+def only_two_items_in_list(value):
+    if value is None:
+        raise ValidationError("Breakfast list cannot be None.")
+    elif not isinstance(value, list):
+        raise ValidationError("Breakfast list has to be a list.")
+    elif len(value) != 2:
+        raise ValidationError("You have to select two breakfast dates to alternate.")
