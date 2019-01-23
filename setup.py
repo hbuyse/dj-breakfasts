@@ -42,13 +42,12 @@ if sys.argv[-1] == 'tag':
     sys.exit()
 
 readme = open('README.rst').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='breakfasts',
     version=version,
     description="""Django breakfasts""",
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
     author='Henri Buyse',
     author_email='henri.buyse@gmail.com',
     url='https://github.com/hbuyse/breakfasts',
