@@ -12,7 +12,7 @@ from django.conf import settings
 from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
 
-# Local Django
+# Current django project
 from breakfasts.models import Breakfast, Participant
 from breakfasts.tasks import send_deferred_mail_and_create_new_breakfast_task
 

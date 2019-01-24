@@ -2,14 +2,20 @@
 
 # Standard library
 import logging
-from datetime import datetime, date
+from datetime import date, datetime
 
 # Django
 from django.forms import (
-    ModelForm, ModelChoiceField, Form, ModelMultipleChoiceField, CheckboxSelectMultiple, ValidationError, DateInput
+    CheckboxSelectMultiple,
+    DateInput,
+    Form,
+    ModelChoiceField,
+    ModelForm,
+    ModelMultipleChoiceField,
+    ValidationError
 )
 
-# Local Django
+# Current django project
 from breakfasts.models import Breakfast, Participant
 from breakfasts.validators import only_two_items_in_list
 

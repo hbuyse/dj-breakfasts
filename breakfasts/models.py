@@ -11,7 +11,9 @@ from django.db import models
 from django.template.loader import get_template, render_to_string
 from django.utils.translation import gettext_lazy as _
 
+# Current django project
 from breakfasts.validators import date_is_future
+
 
 class Participant(models.Model):
 

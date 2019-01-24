@@ -9,7 +9,7 @@ from datetime import datetime
 from django.urls import path, reverse
 from django.views.generic.base import RedirectView
 
-# Local Django
+# Current django project
 from breakfasts import views
 
 app_name = 'breakfasts'

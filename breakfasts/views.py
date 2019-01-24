@@ -15,8 +15,8 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, FormView, ListView, UpdateView
 
-# Local Django
-from breakfasts.forms import BreakfastForm, BreakfastAlternateForm
+# Current django project
+from breakfasts.forms import BreakfastAlternateForm, BreakfastForm
 from breakfasts.models import Breakfast, Participant
 
 logger = logging.getLogger(__name__)

@@ -1,13 +1,13 @@
 # -*- coding: utf-8
 """..."""
 
-# standard library
+# Standard library
 from datetime import timedelta
 
 # Django
 from django.contrib import admin
 
-# Local Django
+# Current django project
 from breakfasts.models import Breakfast, Participant
 
 

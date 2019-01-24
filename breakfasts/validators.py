@@ -1,5 +1,7 @@
+# Standard library
 from datetime import date, datetime
 
+# Django
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _

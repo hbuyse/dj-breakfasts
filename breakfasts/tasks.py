@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# future
+# Future
 from __future__ import absolute_import, unicode_literals
 
 # Standard library
@@ -14,7 +14,7 @@ from celery.utils.log import get_task_logger
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
-# Local Django
+# Current django project
 from breakfasts.emails import send_deferred_mail
 from breakfasts.models import Breakfast, Participant
 
