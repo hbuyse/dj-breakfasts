@@ -1,4 +1,5 @@
-# -*- coding: utf-8
+# -*- coding: utf-8 -*-
+"""Email sender functions."""
 
 # Standard library
 import logging

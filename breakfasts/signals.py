@@ -1,4 +1,5 @@
 # -*- coding: utf-8
+"""Signals handlers definition."""
 
 # Standard library
 import logging
@@ -14,14 +15,14 @@ from django.dispatch import receiver
 
 # Current django project
 from breakfasts.models import Breakfast, Participant
-from breakfasts.tasks import send_deferred_mail_and_create_new_breakfast_task
+from breakfasts.tasks import send_deferred_mail_task, create_new_breakfast_task
 
 logger = logging.getLogger(__name__)
 
 
 @receiver(post_save, sender=Participant)
 def post_save_participant(sender, instance, **kwargs):
-    """Post saving function used when saving a Participant
+    """Post saving function used when saving a Participant.
 
     If the user has just been created, then we create his/her first breakfast.
     If the user has been deactivated, then we remove his/her future breakfasts
@@ -43,8 +44,7 @@ def post_save_participant(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Breakfast)
 def pre_save_breakfast(sender, instance, **kwargs):
-    """Prepare the Celery task to send the email and save its id to be remove if needed
-    """
+    """Prepare the Celery task to send the email and save its id to be remove if needed."""
     if instance.date > date.today():
         email_date = instance.date - timedelta(days=1)
 
@@ -52,15 +52,23 @@ def pre_save_breakfast(sender, instance, **kwargs):
             revoke(instance.email_task_id, terminate=True)
             logger.debug("Revoke email send task (id: {})".format(instance.email_task_id))
 
-        task = send_deferred_mail_and_create_new_breakfast_task.apply_async(
+        task = send_deferred_mail_task.apply_async(
             (
                 instance.participant.pk,
                 email_date
             ),
             countdown=(email_date - date.today()) / timedelta(seconds=1)
         )
-
         instance.email_task_id = task.id
+
+        task = create_new_breakfast_task.apply_async(
+            (
+                instance.participant.pk
+            ),
+            countdown=(instance.date - date.today()) / timedelta(seconds=1)
+        )
+        instance.email_task_id = task.id
+
         logger.info("Breakfast on the date of {} will be payed by {} {}.".format(
             instance.date,
             instance.participant.first_name,
@@ -71,8 +79,7 @@ def pre_save_breakfast(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=Breakfast)
 def post_delete_breakfast(sender, instance, **kwargs):
-    """Anticipate every breakfasts that are after the instance date by a week
-    """
+    """Anticipate every breakfasts that are after the instance date by a week."""
     q = Breakfast.objects.filter(date__gt=instance.date)
 
     for b in q:

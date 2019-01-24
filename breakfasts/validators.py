@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Validators for the `breakfasts` project."""
+
 # Standard library
 from datetime import date, datetime
 
@@ -8,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 def date_is_future(value):
-    """Validator to check if the value is in the future."""
+    """Check if the value is in the future."""
     if isinstance(value, datetime):
         if value <= timezone.now():
             raise ValidationError(_("The date entered must be greater than today."))
@@ -20,7 +23,7 @@ def date_is_future(value):
 
 
 def date_is_present_or_future(value):
-    """Validator to check if the value is today or in the future."""
+    """Check if the value is today or in the future."""
     if isinstance(value, datetime):
         if value < timezone.now():
             raise ValidationError(_("The date entered must be today or greater."))
@@ -32,6 +35,7 @@ def date_is_present_or_future(value):
 
 
 def only_two_items_in_list(value):
+    """Check that there are only two items in the given list."""
     if value is None:
         raise ValidationError("Breakfast list cannot be None.")
     elif not isinstance(value, list):

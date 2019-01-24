@@ -23,42 +23,44 @@ class Participant(models.Model):
     is_active = models.BooleanField(_("is active"), default=True)
 
     def __str__(self):
-        """String representation."""
+        """Representation as a string."""
         return "{} {}".format(self.first_name, self.last_name)
 
     class Meta:
         """Meta class."""
 
         verbose_name = _("participant")
-        verbose_name_plural = _("participants")
         ordering = ("first_name", "last_name")
 
     def get_past_breakfast(self):
+        """Retrieve the list of the past breakfasts of a participant."""
         return self.breakfast_set.filter(date__lte=datetime.today()).order_by("-date")
 
     def get_future_breakfast(self):
+        """Retrieve the list of the future breakfasts of a participant."""
         return self.breakfast_set.filter(date__gt=datetime.today()).order_by("date")
 
     def get_next_breakfast(self):
+        """Retrieve the next breakfast of a participant."""
         return self.breakfast_set.filter(date__gt=datetime.today()).order_by("date").first()
 
 
 class Breakfast(models.Model):
-    """Breakfast date"""
+    """Breakfast model."""
 
     participant = models.ForeignKey('Participant', on_delete=models.DO_NOTHING, unique_for_date="date")
-    date = models.DateField('breakfast creation date', validators=[date_is_future])
-    created = models.DateTimeField('breakfast creation date', auto_now_add=True)
-    modified = models.DateTimeField('breakfast last modification date', auto_now=True)
-    email_task_id = models.CharField('breakfast task_id', max_length=255, editable=False, blank=True)
+    date = models.DateField('date', validators=[date_is_future])
+    created = models.DateTimeField('creation date', auto_now_add=True)
+    modified = models.DateTimeField('last modification date', auto_now=True)
+    email_task_id = models.CharField('email task id', max_length=255, editable=False, blank=True)
+    next_breakfast_task_id = models.CharField('next breakfast task id', max_length=255, editable=False, blank=True)
 
     def __str__(self):
-        """String representation."""
+        """Representation as a string."""
         return "Breakfast date {}".format(self.date)
 
     class Meta:
         """Meta class."""
 
-        verbose_name = _("Breakfast date")
-        verbose_name_plural = _("Breakfast dates")
+        verbose_name = _("breakfast")
         ordering = ("date",)

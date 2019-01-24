@@ -58,7 +58,6 @@ class TestParticipantModel(TestCase):
         self.assertEqual(p.get_next_breakfast(), Breakfast.objects.last())
 
 
-
 class TestBreakfastModel(TestCase):
     """Test post class model."""
 
@@ -72,25 +71,25 @@ class TestBreakfastModel(TestCase):
 
     def test_string_representation(self):
         """Test the string representation of the post model."""
-        b = Breakfast(participant=self.participant, date=date.today())
-        self.assertEqual(str(b), "Breakfast date {}".format(date.today()))
+        b = Breakfast(participant=self.participant, date=Breakfast.objects.last().date)
+        self.assertEqual(str(b), "Breakfast date {}".format(Breakfast.objects.last().date))
 
     def test_verbose_name(self):
         """Test the verbose name in singular."""
-        self.assertEqual(str(Breakfast._meta.verbose_name), "Breakfast date")
+        self.assertEqual(str(Breakfast._meta.verbose_name), "breakfast")
 
     def test_verbose_name_plural(self):
         """Test the verbose name in plural."""
-        self.assertEqual(str(Breakfast._meta.verbose_name_plural), "Breakfast dates")
+        self.assertEqual(str(Breakfast._meta.verbose_name_plural), "breakfasts")
 
     def test_date_is_in_the_past(self):
-        b = Breakfast(participant=self.participant, date=date.today() - timedelta(days=1))
+        b = Breakfast(participant=self.participant, date=Breakfast.objects.last().date - timedelta(days=1))
         self.assertRaises(ValidationError, b.full_clean)
 
     def test_date_is_today(self):
-        b = Breakfast(participant=self.participant, date=date.today())
+        b = Breakfast(participant=self.participant, date=Breakfast.objects.last().date)
         self.assertRaises(ValidationError, b.full_clean)
 
     def test_date_is_tomorrow(self):
-        b = Breakfast(participant=self.participant, date=date.today() + timedelta(days=1))
+        b = Breakfast(participant=self.participant, date=Breakfast.objects.last().date + timedelta(days=2))
         b.full_clean()
