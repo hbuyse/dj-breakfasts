@@ -50,6 +50,12 @@ flake8:
   script:
     - tox -e flake8
 
+isort:
+  image: python:3.6
+  stage: test
+  script:
+    - tox -e isort
+
 dist:
   image: python:3.6
   stage: package
