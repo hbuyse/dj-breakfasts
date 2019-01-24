@@ -74,10 +74,10 @@ class BreakfastAlternateView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         """Alternate dates between two breakfasts."""
         data = form.clean()
-        breakfast_list = data["breakfast_list"]
-        breakfast_list[0].date, breakfast_list[1].date = breakfast_list[1].date, breakfast_list[0].date
+        self.breakfast_list = data["breakfast_list"]
+        self.breakfast_list[0].date, self.breakfast_list[1].date = self.breakfast_list[1].date, self.breakfast_list[0].date
 
-        for b in breakfast_list:
+        for b in self.breakfast_list:
             logger.info("Saving new date for breakfast {}".format(b.id))
             b.save()
 
