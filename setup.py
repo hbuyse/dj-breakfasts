@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # coding=utf-8
+"""Setup file for the `breakfasts` Django project."""
+
 import os
 import re
-import sys
 
 try:
     from setuptools import setup
@@ -21,14 +22,14 @@ def get_version(*file_paths):
     raise RuntimeError('Unable to find version string.')
 
 
-version = get_version("breakfasts", "__init__.py")
-readme = open('README.rst').read()
+VERSION = get_version("breakfasts", "__init__.py")
+README = open('README.rst').read()
 
 setup(
     name='breakfasts',
-    version=version,
+    version=VERSION,
     description="""Django breakfasts""",
-    long_description=readme,
+    long_description=README,
     author='Henri Buyse',
     author_email='henri.buyse@gmail.com',
     url='https://github.com/hbuyse/breakfasts',

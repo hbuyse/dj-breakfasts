@@ -2,13 +2,10 @@
 """Django Breakfast model implementation."""
 
 # Standard library
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # Django
-from django.core.mail import EmailMessage
-from django.core.validators import RegexValidator
 from django.db import models
-from django.template.loader import get_template, render_to_string
 from django.utils.translation import gettext_lazy as _
 
 # Current django project
@@ -16,9 +13,10 @@ from breakfasts.validators import date_is_future
 
 
 class Participant(models.Model):
+    """Participant model."""
 
     first_name = models.CharField(_('first name'), max_length=128)
-    last_name  = models.CharField(_('last name'), max_length=128)
+    last_name = models.CharField(_('last name'), max_length=128)
     email = models.EmailField(_("email"), max_length=254)
     created = models.DateTimeField('creation date', auto_now_add=True)
     modified = models.DateTimeField('last modification date', auto_now=True)

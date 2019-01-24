@@ -2,11 +2,8 @@
 
 """urls for the breakfasts package."""
 
-# Standard library
-from datetime import datetime
-
 # Django
-from django.urls import path, reverse
+from django.urls import path
 from django.views.generic.base import RedirectView
 
 # Current django project

@@ -2,7 +2,7 @@
 
 # Standard library
 import logging
-from datetime import date, datetime
+from datetime import datetime
 
 # Django
 from django.forms import (
@@ -11,8 +11,7 @@ from django.forms import (
     Form,
     ModelChoiceField,
     ModelForm,
-    ModelMultipleChoiceField,
-    ValidationError
+    ModelMultipleChoiceField
 )
 
 # Current django project
@@ -20,6 +19,7 @@ from breakfasts.models import Breakfast, Participant
 from breakfasts.validators import only_two_items_in_list
 
 logger = logging.getLogger(__name__)
+
 
 class BreakfastForm(ModelForm):
     """Form for creating a new assignment for a course."""
@@ -30,8 +30,9 @@ class BreakfastForm(ModelForm):
         model = Breakfast
         widgets = {
             "date": DateInput(attrs={"class": "datepicker"}),
-            }
-        fields = [ 'date', 'participant' ]
+        }
+        fields = ['date', 'participant']
+
 
 class BreakfastAlternateForm(Form):
     """Form to alternate participants between two breakfasts."""

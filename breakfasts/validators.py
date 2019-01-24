@@ -30,6 +30,7 @@ def date_is_present_or_future(value):
     else:
         raise ValidationError(_("The value entered isn't a valid type of date or datetime."))
 
+
 def only_two_items_in_list(value):
     if value is None:
         raise ValidationError("Breakfast list cannot be None.")

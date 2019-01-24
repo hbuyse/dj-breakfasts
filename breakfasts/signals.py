@@ -2,7 +2,7 @@
 
 # Standard library
 import logging
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 # Third-party
 from celery.task.control import revoke
@@ -29,16 +29,17 @@ def post_save_participant(sender, instance, **kwargs):
     # Add the first breakfast date for a newly created participant.
     if kwargs['created']:
         last_breakfast = Breakfast.objects.last()
-        next_friday = date.today() + timedelta( (settings.BREAKFAST_DAY - date.today().weekday()) % 7 )
+        next_friday = date.today() + timedelta((settings.BREAKFAST_DAY - date.today().weekday()) % 7)
         b = Breakfast.objects.create(
-                participant=instance,
-                date=next_friday if last_breakfast is None else last_breakfast.date + timedelta(weeks=1)
-            )
+            participant=instance,
+            date=next_friday if last_breakfast is None else last_breakfast.date + timedelta(weeks=1)
+        )
     # If an user is deactivated, then we remove his/her next breakfasts
     elif not instance.is_active:
         q = Breakfast.objects.filter(participant=instance.id, date__gt=date.today())
         for b in q:
             b.delete()
+
 
 @receiver(pre_save, sender=Breakfast)
 def pre_save_breakfast(sender, instance, **kwargs):
@@ -52,12 +53,12 @@ def pre_save_breakfast(sender, instance, **kwargs):
             logger.debug("Revoke email send task (id: {})".format(instance.email_task_id))
 
         task = send_deferred_mail_and_create_new_breakfast_task.apply_async(
-                    (
-                        instance.participant.pk,
-                        email_date
-                    ),
-                    countdown=(email_date - date.today()) / timedelta(seconds=1)
-                    )
+            (
+                instance.participant.pk,
+                email_date
+            ),
+            countdown=(email_date - date.today()) / timedelta(seconds=1)
+        )
 
         instance.email_task_id = task.id
         logger.info("Breakfast on the date of {} will be payed by {} {}.".format(
@@ -66,6 +67,7 @@ def pre_save_breakfast(sender, instance, **kwargs):
             instance.participant.last_name)
         )
         logger.info("An email (task_id: {}) will be send the {}".format(instance.email_task_id, email_date))
+
 
 @receiver(post_delete, sender=Breakfast)
 def post_delete_breakfast(sender, instance, **kwargs):

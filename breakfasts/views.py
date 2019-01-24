@@ -9,10 +9,8 @@ from datetime import datetime
 # Django
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, DetailView, FormView, ListView, UpdateView
 
 # Current django project
@@ -20,6 +18,7 @@ from breakfasts.forms import BreakfastAlternateForm, BreakfastForm
 from breakfasts.models import Breakfast, Participant
 
 logger = logging.getLogger(__name__)
+
 
 class BreakfastListView(ListView):
     past = False
@@ -49,7 +48,7 @@ class BreakfastCreateView(LoginRequiredMixin, CreateView):
     form_class = BreakfastForm
 
     def get_success_url(self):
-        return reverse('breakfasts:detail', args = (self.object.id,))
+        return reverse('breakfasts:detail', args=(self.object.id,))
 
 
 class BreakfastUpdateView(LoginRequiredMixin, UpdateView):
@@ -57,7 +56,7 @@ class BreakfastUpdateView(LoginRequiredMixin, UpdateView):
     form_class = BreakfastForm
 
     def get_success_url(self):
-        return reverse('breakfasts:detail', args = (self.object.id,))
+        return reverse('breakfasts:detail', args=(self.object.id,))
 
 
 class BreakfastDeleteView(LoginRequiredMixin, DeleteView):
@@ -75,17 +74,20 @@ class BreakfastAlternateView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         """Alternate dates between two breakfasts."""
         data = form.clean()
-        self.breakfast_list = data["breakfast_list"]
-        self.breakfast_list[0].date, self.breakfast_list[1].date = self.breakfast_list[1].date, self.breakfast_list[0].date
+        breakfast_list = data["breakfast_list"]
+        breakfast_list[0].date, breakfast_list[1].date = breakfast_list[1].date, breakfast_list[0].date
 
-        for b in self.breakfast_list:
+        for b in breakfast_list:
             logger.info("Saving new date for breakfast {}".format(b.id))
             b.save()
 
         return super().form_valid(form)
 
     def get_success_url(self):
-        messages.success(self.request, "Alternate two dates: {} and {}".format(self.breakfast_list[0].date, self.breakfast_list[1].date))
+        messages.success(
+            self.request,
+            "Alternate two dates: {} and {}".format(self.breakfast_list[0].date, self.breakfast_list[1].date)
+        )
         return reverse('breakfasts:next')
 
 
@@ -114,7 +116,7 @@ class ParticipantCreateView(LoginRequiredMixin, CreateView):
     ]
 
     def get_success_url(self):
-        return reverse('breakfasts:participant-detail', args = (self.object.id,))
+        return reverse('breakfasts:participant-detail', args=(self.object.id,))
 
 
 class ParticipantUpdateView(LoginRequiredMixin, UpdateView):
@@ -126,7 +128,7 @@ class ParticipantUpdateView(LoginRequiredMixin, UpdateView):
     ]
 
     def get_success_url(self):
-        return reverse('breakfasts:participant-detail', args = (self.object.id,))
+        return reverse('breakfasts:participant-detail', args=(self.object.id,))
 
 
 class ParticipantDeactivateView(LoginRequiredMixin, DeleteView):

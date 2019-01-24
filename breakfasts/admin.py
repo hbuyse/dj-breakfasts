@@ -18,15 +18,15 @@ class BreakfastAdmin(admin.ModelAdmin):
     list_display = (
         'date',
         'participant'
-        )
+    )
     ordering = [
         'date'
-        ]
+    ]
     actions = [
         'shift_by_one_week',
         'invert_two_participants',
         'send_mail',
-        ]
+    ]
 
     def shift_by_one_week(self, request, queryset):
         for obj in queryset:
@@ -37,11 +37,9 @@ class BreakfastAdmin(admin.ModelAdmin):
         if len(queryset) != 2:
             self.message_user(request, "Impossible to invert {} participants".format(len(queryset)))
         else:
-            tmp = queryset[0].date
-            queryset[0].date = queryset[1].date
-            queryset[1].date = tmp
-            queryset[0].save()
-            queryset[1].save()
+            queryset[0].date, queryset[1].date = queryset[1].date, queryset[0].date
+            for b in queryset:
+                b.save()
 
 
 @admin.register(Participant)
@@ -51,4 +49,4 @@ class ParticipantAdmin(admin.ModelAdmin):
     list_display = (
         'first_name',
         'last_name'
-        )
+    )

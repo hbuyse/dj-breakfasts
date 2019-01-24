@@ -4,13 +4,14 @@
 import logging
 
 # Django
-from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
 logger = logging.getLogger(__name__)
 
+
 def send_deferred_mail(recipient, first_name, date):
+    """Send an email to the given recipient."""
     if recipient is None or first_name is None or date is None:
         return False
 

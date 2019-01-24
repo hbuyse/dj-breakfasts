@@ -8,4 +8,4 @@ class BreakfastsConfig(AppConfig):
     name = 'breakfasts'
 
     def ready(self):
-        import breakfasts.signals
+        import breakfasts.signals   # noqa
