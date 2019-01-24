@@ -67,7 +67,7 @@ def pre_save_breakfast(sender, instance, **kwargs):
             ),
             countdown=(instance.date - date.today()) / timedelta(seconds=1)
         )
-        instance.email_task_id = task.id
+        instance.next_breakfast_task_id = task.id
 
         logger.info("Breakfast on the date of {} will be payed by {} {}.".format(
             instance.date,
