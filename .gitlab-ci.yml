@@ -7,7 +7,6 @@ stages:
 before_script:
   - curl -O https://bootstrap.pypa.io/get-pip.py
   - python get-pip.py
-  - pip install -r requirements/test.txt
 
 py35-django20:
   image: python:3.5
