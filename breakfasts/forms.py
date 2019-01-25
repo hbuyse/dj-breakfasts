@@ -5,14 +5,7 @@ import logging
 from datetime import datetime
 
 # Django
-from django.forms import (
-    CheckboxSelectMultiple,
-    DateInput,
-    Form,
-    ModelChoiceField,
-    ModelForm,
-    ModelMultipleChoiceField
-)
+from django.forms import CheckboxSelectMultiple, DateInput, Form, ModelChoiceField, ModelForm, ModelMultipleChoiceField
 
 # Current django project
 from breakfasts.models import Breakfast, Participant
