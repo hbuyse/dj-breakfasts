@@ -27,11 +27,12 @@ matrix:
     - python: 3.7
       env: TOXENV=isort
 
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -r requirements/test.txt
+services:
+  - rabbitmq
 
 # command to run tests using coverage, e.g. python setup.py test
-script: tox -e $TOXENV
+script:
+  - tox -e $TOXENV
 
 after_success:
   - codecov -e TOXENV
