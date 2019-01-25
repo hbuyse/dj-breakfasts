@@ -63,7 +63,7 @@ def pre_save_breakfast(sender, instance, **kwargs):
 
         task = create_new_breakfast_task.apply_async(
             (
-                instance.participant.pk
+                instance.participant.pk,
             ),
             countdown=(instance.date - date.today()) / timedelta(seconds=1)
         )
