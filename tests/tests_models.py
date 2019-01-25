@@ -83,11 +83,11 @@ class TestBreakfastModel(TestCase):
         self.assertEqual(str(Breakfast._meta.verbose_name_plural), "breakfasts")
 
     def test_date_is_in_the_past(self):
-        b = Breakfast(participant=self.participant, date=Breakfast.objects.last().date - timedelta(days=1))
+        b = Breakfast(participant=self.participant, date=date.today() - timedelta(days=1))
         self.assertRaises(ValidationError, b.full_clean)
 
     def test_date_is_today(self):
-        b = Breakfast(participant=self.participant, date=Breakfast.objects.last().date)
+        b = Breakfast(participant=self.participant, date=date.today())
         self.assertRaises(ValidationError, b.full_clean)
 
     def test_date_is_tomorrow(self):
