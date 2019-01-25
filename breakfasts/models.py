@@ -27,8 +27,6 @@ class Participant(models.Model):
         return "{} {}".format(self.first_name, self.last_name)
 
     class Meta:
-        """Meta class."""
-
         verbose_name = _("participant")
         ordering = ("first_name", "last_name")
 
@@ -60,7 +58,5 @@ class Breakfast(models.Model):
         return "Breakfast date {}".format(self.date)
 
     class Meta:
-        """Meta class."""
-
         verbose_name = _("breakfast")
         ordering = ("date",)

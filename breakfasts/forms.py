@@ -1,4 +1,5 @@
 # -*- coding: utf-8
+"""Project forms."""
 
 # Standard library
 import logging
@@ -20,6 +21,7 @@ class BreakfastForm(ModelForm):
     participant = ModelChoiceField(queryset=Participant.objects.filter(is_active=True), empty_label=None)
 
     class Meta:
+
         model = Breakfast
         widgets = {
             "date": DateInput(attrs={"class": "datepicker"}),
@@ -29,6 +31,7 @@ class BreakfastForm(ModelForm):
 
 class BreakfastAlternateForm(Form):
     """Form to alternate participants between two breakfasts."""
+
     breakfast_list = ModelMultipleChoiceField(
         queryset=Breakfast.objects.filter(date__gt=datetime.today()).order_by("date"),
         widget=CheckboxSelectMultiple,

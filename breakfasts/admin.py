@@ -1,5 +1,5 @@
 # -*- coding: utf-8
-"""..."""
+"""Administrative representation of the `breakfasts` models."""
 
 # Standard library
 from datetime import timedelta
@@ -29,17 +29,10 @@ class BreakfastAdmin(admin.ModelAdmin):
     ]
 
     def shift_by_one_week(self, request, queryset):
+        """Shift all the breakfasts by one week."""
         for obj in queryset:
             obj.date += timedelta(7)
             obj.save()
-
-    def invert_two_participants(self, request, queryset):
-        if len(queryset) != 2:
-            self.message_user(request, "Impossible to invert {} participants".format(len(queryset)))
-        else:
-            queryset[0].date, queryset[1].date = queryset[1].date, queryset[0].date
-            for b in queryset:
-                b.save()
 
 
 @admin.register(Participant)

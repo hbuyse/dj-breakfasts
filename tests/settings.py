@@ -6,6 +6,8 @@ from __future__ import absolute_import, unicode_literals
 
 import os
 
+from datetime import date
+
 DEBUG = False
 USE_TZ = True
 
@@ -63,4 +65,4 @@ MIDDLEWARE = (
 
 # Day of breakfasts
 # Check https://docs.python.org/3/library/datetime.html#datetime.date.weekday to get the list of the day
-BREAKFAST_DAY = 4       # Friday
+BREAKFAST_DAY = date.today().weekday() + 1       # Always tomorrow
