@@ -15,7 +15,6 @@ from django.urls import reverse
 from breakfasts.models import Breakfast, Participant
 
 
-@override_settings(BREAKFAST_DAY=date.today().weekday() + 1)
 class TestBreakfastListViewAsAnonymous(TestCase):
     """Tests ListView for Post."""
 
