@@ -5,13 +5,14 @@
 
 # Django
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 # Current django project
 from breakfasts.models import Participant
 
 
+@override_settings(LOGIN_URL="/toto/")
 class TestParticipantCreateViewAsAnonymous(TestCase):
     """Tests."""
 
@@ -20,7 +21,7 @@ class TestParticipantCreateViewAsAnonymous(TestCase):
         r = self.client.get(reverse('breakfasts:participant-create'))
 
         self.assertEqual(r.status_code, 302)
-        self.assertEqual(r.url, '/accounts/login/?next=/participants/create/')
+        self.assertEqual(r.url, '/toto/?next=/participants/create/')
 
     def test_post(self):
         """Tests."""
@@ -32,7 +33,7 @@ class TestParticipantCreateViewAsAnonymous(TestCase):
         r = self.client.post(reverse('breakfasts:participant-create'), d)
 
         self.assertEqual(r.status_code, 302)
-        self.assertEqual(r.url, '/accounts/login/?next=/participants/create/')
+        self.assertEqual(r.url, '/toto/?next=/participants/create/')
 
 
 class TestParticipantCreateViewAsLogged(TestCase):

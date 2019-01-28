@@ -8,13 +8,14 @@ from datetime import date, timedelta
 
 # Django
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 # Current django project
 from breakfasts.models import Breakfast, Participant
 
 
+@override_settings(LOGIN_URL="/toto/")
 class TestBreakfastCreateViewAsAnonymous(TestCase):
     """Tests."""
 
@@ -41,7 +42,7 @@ class TestBreakfastCreateViewAsAnonymous(TestCase):
         r = self.client.post(reverse('breakfasts:create'), d)
 
         self.assertEqual(r.status_code, 302)
-        self.assertEqual(len(Breakfast.objects.all()), 1)
+        self.assertEqual(r.url, '/toto/?next=/create/')
 
     def test_post(self):
         """Tests."""
@@ -52,7 +53,7 @@ class TestBreakfastCreateViewAsAnonymous(TestCase):
         r = self.client.post(reverse('breakfasts:create'), d)
 
         self.assertEqual(r.status_code, 302)
-        self.assertEqual(len(Breakfast.objects.all()), 1)
+        self.assertEqual(r.url, '/toto/?next=/create/')
 
 
 class TestBreakfastCreateViewAsLogged(TestCase):

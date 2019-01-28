@@ -5,13 +5,14 @@
 
 # Django
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 # Current django project
 from breakfasts.models import Participant
 
 
+@override_settings(LOGIN_URL="/toto/")
 class TestVcnAccountDeactivateViewAsAnonymous(TestCase):
     """Tests."""
 
@@ -28,14 +29,14 @@ class TestVcnAccountDeactivateViewAsAnonymous(TestCase):
         r = self.client.get(reverse('breakfasts:participant-deactivate', kwargs={'pk': self.participant.id}))
 
         self.assertEqual(r.status_code, 302)
-        self.assertEqual(r.url, '/accounts/login/?next=/participants/{}/deactivate/'.format(self.participant.id))
+        self.assertEqual(r.url, '/toto/?next=/participants/{id}/deactivate/'.format(id=self.participant.id))
 
     def test_post(self):
         """Tests."""
         r = self.client.post(reverse('breakfasts:participant-deactivate', kwargs={'pk': self.participant.id}))
 
         self.assertEqual(r.status_code, 302)
-        self.assertEqual(r.url, '/accounts/login/?next=/participants/{}/deactivate/'.format(self.participant.id))
+        self.assertEqual(r.url, '/toto/?next=/participants/{id}/deactivate/'.format(id=self.participant.id))
         participant = Participant.objects.get(id=self.participant.id)
         self.assertTrue(participant.is_active)
 

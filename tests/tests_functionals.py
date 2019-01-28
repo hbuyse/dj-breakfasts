@@ -6,12 +6,12 @@
 import time
 import unittest
 
-# Django
-from django.test import tag
-
-# Current django project
+# Third-party
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
+
+# Django
+from django.test import tag
 
 unittest.TestLoader.sortTestMethodsUsing = None
 

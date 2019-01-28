@@ -29,13 +29,13 @@ class TestBreakfastDeleteViewAsAnonymous(TestCase):
         """Tests."""
         r = self.client.get(reverse('breakfasts:delete', kwargs={'pk': self.breakfast.id}))
         self.assertEqual(r.status_code, 302)
-        self.assertIn("/toto/", r.url)
+        self.assertEqual(r.url, '/toto/?next=/{id}/delete/'.format(id=self.breakfast.id))
 
     def test_post(self):
         """Tests."""
         r = self.client.post(reverse('breakfasts:delete', kwargs={'pk': self.breakfast.id}))
         self.assertEqual(r.status_code, 302)
-        self.assertIn("/toto/", r.url)
+        self.assertEqual(r.url, '/toto/?next=/{id}/delete/'.format(id=self.breakfast.id))
 
 
 class TestBreakfastDeleteViewAsLogged(TestCase):

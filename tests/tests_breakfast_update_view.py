@@ -32,7 +32,7 @@ class TestBreakfastUpdateViewAsAnonymous(TestCase):
         """Tests."""
         r = self.client.get(reverse('breakfasts:update', kwargs={'pk': self.breakfast.id}))
         self.assertEqual(r.status_code, 302)
-        self.assertIn("/toto/", r.url)
+        self.assertEqual(r.url, '/toto/?next=/{id}/update/'.format(id=self.breakfast.id))
 
     def test_post(self):
         """Tests."""
@@ -44,7 +44,7 @@ class TestBreakfastUpdateViewAsAnonymous(TestCase):
         r = self.client.post(reverse('breakfasts:update', kwargs={'pk': self.breakfast.id}), d)
 
         self.assertEqual(r.status_code, 302)
-        self.assertIn("/toto/", r.url)
+        self.assertEqual(r.url, '/toto/?next=/{id}/update/'.format(id=self.breakfast.id))
 
 
 class TestBreakfastUpdateViewAsLogged(TestCase):
