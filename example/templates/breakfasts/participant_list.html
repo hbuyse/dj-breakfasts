@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
-{% load breakfast_extras %}
 
 {% block path %}
   <nav aria-label="breadcrumb">
@@ -27,11 +26,12 @@
 
 {% block content %}
   {% for participant in participant_list %}
-    {% ifequal forloop.counter0|modulo:4 0 %}
-      <div class="row" style="margin-bottom: 10px;">
-    {% endifequal %}
 
-    <div class="col-3">
+    {% if forloop.first %}
+      <div class="row">
+    {% endif %}
+
+    <div class="col-3" style="margin-bottom: 10px;">
       <div class="card">
         <div class="card-header">
           {{ participant }}
@@ -52,9 +52,14 @@
       </div>
     </div>
 
-    {% ifequal forloop.counter0|modulo:4 3 %}
+    {# if last column in row #}
+    {% if forloop.counter|divisibleby:"4" and not forloop.last %}
       </div>
-    {% endifequal %}
+      <div class="row">
+    {% elif forloop.last %}
+      </div>
+    {% endif %}
+
   {% empty %}
     No participant yet...
   {% endfor %}
