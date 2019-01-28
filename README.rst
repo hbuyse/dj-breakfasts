@@ -2,6 +2,25 @@
 DJ-BREAKFASTS
 =============
 
+-------------
+Configuration
+-------------
+
+Add this to the end of your settings
+
+.. code-block::
+
+    EMAIL_HOST="<HOST>"
+    EMAIL_PORT=<PORT>
+    EMAIL_USE_TLS=<True|False>
+    EMAIL_SUBJECT_PREFIX="[PETIT DEJ] "
+    EMAIL_HOST_USER="<User>"
+    EMAIL_HOST_PASSWORD="<Password>"
+
+    BREAKFAST_DAY = 4
+
+    CELERY_RESULT_BACKEND = 'django-db'
+
 -------
 Testing
 -------
