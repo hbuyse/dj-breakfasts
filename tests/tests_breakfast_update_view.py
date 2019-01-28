@@ -3,13 +3,17 @@
 
 """Tests the views."""
 
+# Standard library
 from datetime import timedelta
 
+# Django
 from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
+# Current django project
 from breakfasts.models import Breakfast, Participant
+
 
 @override_settings(LOGIN_URL="/toto/")
 class TestBreakfastUpdateViewAsAnonymous(TestCase):

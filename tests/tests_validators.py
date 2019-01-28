@@ -3,13 +3,17 @@
 
 """Tests for `breakfasts` models module."""
 
+# Standard library
 from datetime import date, timedelta
 
+# Django
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils import timezone
 
+# Current django project
 from breakfasts.validators import date_is_future, date_is_present_or_future, only_two_items_in_list
+
 
 class TestDateIsFuture(TestCase):
     """Test date_is_future validator."""

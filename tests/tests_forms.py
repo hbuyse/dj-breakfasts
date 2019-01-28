@@ -7,10 +7,10 @@ from datetime import date, timedelta
 from django.core.exceptions import ValidationError
 from django.test import TestCase, override_settings
 
+# Current django project
 # Local Django
-from breakfasts.forms import BreakfastForm, BreakfastAlternateForm
+from breakfasts.forms import BreakfastAlternateForm, BreakfastForm
 from breakfasts.models import Breakfast, Participant
-
 
 
 class TestBreakfastForm(TestCase):

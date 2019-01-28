@@ -2,14 +2,16 @@
 
 """."""
 
-import unittest
+# Standard library
 import time
+import unittest
 
+# Django
 from django.test import tag
 
+# Current django project
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
-
 
 unittest.TestLoader.sortTestMethodsUsing = None
 

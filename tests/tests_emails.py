@@ -3,11 +3,15 @@
 
 """Tests for `breakfasts` models module."""
 
+# Standard library
 from datetime import date
 
+# Django
 from django.test import TestCase, override_settings
 
+# Current django project
 from breakfasts.emails import send_deferred_mail
+
 
 class TestSendingDeferredEmail(TestCase):
     """Test deferred email sending."""

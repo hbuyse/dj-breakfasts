@@ -3,6 +3,7 @@
 
 """Tests for `gymnasiums` urls module."""
 
+# Django
 from django.test import TestCase
 from django.urls import reverse
 

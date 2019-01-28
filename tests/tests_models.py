@@ -3,15 +3,16 @@
 
 """Tests for `breakfasts` models module."""
 
+# Standard library
 from datetime import date, timedelta
 
-from django.test import TestCase
+# Django
 from django.core.exceptions import ValidationError
+from django.test import TestCase
 
-from breakfasts.models import (
-    Breakfast,
-    Participant
-)
+# Current django project
+from breakfasts.models import Breakfast, Participant
+
 
 class TestParticipantModel(TestCase):
     """Test Participant model."""

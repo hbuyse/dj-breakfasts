@@ -3,16 +3,17 @@
 
 """Tests the views."""
 
+# Standard library
 from datetime import date, timedelta
 
+# Django
 from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from breakfasts.models import (
-    Breakfast,
-    Participant
-)
+# Current django project
+from breakfasts.models import Breakfast, Participant
+
 
 @override_settings(BREAKFAST_DAY=date.today().weekday() + 1)
 class TestBreakfastListViewAsAnonymous(TestCase):
