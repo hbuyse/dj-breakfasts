@@ -5,14 +5,14 @@
 from datetime import timedelta
 
 # Django
-from django.contrib import admin
+from django.contrib.admin import ModelAdmin, register
 
 # Current django project
 from breakfasts.models import Breakfast, Participant
 
 
-@admin.register(Breakfast)
-class BreakfastAdmin(admin.ModelAdmin):
+@register(Breakfast)
+class BreakfastAdmin(ModelAdmin):
     """Breakfast admin object."""
 
     list_display = (
@@ -31,12 +31,12 @@ class BreakfastAdmin(admin.ModelAdmin):
     def shift_by_one_week(self, request, queryset):
         """Shift all the breakfasts by one week."""
         for obj in queryset:
-            obj.date += timedelta(7)
+            obj.date += timedelta(weeks=1)
             obj.save()
 
 
-@admin.register(Participant)
-class ParticipantAdmin(admin.ModelAdmin):
+@register(Participant)
+class ParticipantAdmin(ModelAdmin):
     """Participant admin object."""
 
     list_display = (
