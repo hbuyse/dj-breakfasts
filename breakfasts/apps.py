@@ -1,12 +1,12 @@
 # -*- coding: utf-8
-"""Representation of the gymnasiums application and its configuration."""
+"""Representation of the breakfasts application and its configuration."""
 
 # Django
 from django.apps import AppConfig
 
 
 class BreakfastsConfig(AppConfig):
-    """Representation of the gymnasiums application and its configuration."""
+    """Representation of the breakfasts application and its configuration."""
 
     name = 'breakfasts'
 

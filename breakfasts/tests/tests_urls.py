@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-"""Tests for `gymnasiums` urls module."""
+"""Tests for `breakfasts` urls module."""
 
 # Django
 from django.test import TestCase
