@@ -15,7 +15,7 @@ from django.dispatch import receiver
 
 # Current django project
 from breakfasts.models import Breakfast, Participant
-from breakfasts.tasks import create_new_breakfast_task, send_deferred_mail_task
+from example.tasks import create_new_breakfast_task, send_deferred_mail_task
 
 logger = logging.getLogger(__name__)
 

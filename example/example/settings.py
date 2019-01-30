@@ -48,7 +48,7 @@ LOGGING = {
     'loggers': {
         '': {
             'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
-            'handlers': ['console', 'file']
+            'handlers': ['console']
         },
     },
 }
@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     'django_icons',
     'django_celery_results',
     'bootstrap4',
+    "example"
 ]
 
 MIDDLEWARE = [
@@ -247,3 +248,4 @@ LOGOUT_REDIRECT_URL = "/"
 BREAKFAST_DAY = 4
 
 CELERY_RESULT_BACKEND = 'django-db'
+DATA_UPLOAD_MAX_NUMBER_FIELDS=102400

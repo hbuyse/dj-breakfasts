@@ -1,8 +1,12 @@
 # -*- coding: utf-8
 """Representation of the breakfasts application and its configuration."""
 
+import logging
+
 # Django
 from django.apps import AppConfig
+
+logger = logging.getLogger(__name__)
 
 
 class BreakfastsConfig(AppConfig):
@@ -11,5 +15,4 @@ class BreakfastsConfig(AppConfig):
     name = 'breakfasts'
 
     def ready(self):
-        """Code ran when django starts."""
-        import breakfasts.signals   # noqa
+        logger.debug("App {} ready.".format(self.name))
