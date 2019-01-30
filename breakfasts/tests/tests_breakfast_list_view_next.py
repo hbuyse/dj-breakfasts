@@ -19,6 +19,10 @@ from breakfasts.models import Breakfast, Participant
 class TestBreakfastListViewNextAsAnonymous(TestCase):
     """Tests ListView for Post."""
 
+    @classmethod
+    def setUpTestData(cls):
+        cls.participant = Participant.objects.create()
+
     def tests_list_view_empty(self):
         """Tests."""
         r = self.client.get(reverse('breakfasts:next'))
@@ -28,7 +32,7 @@ class TestBreakfastListViewNextAsAnonymous(TestCase):
 
     def tests_list_view_one_breakfast(self):
         """Tests."""
-        participant = Participant.objects.create()
+        Breakfast.objects.create(participant=self.participant, date=date.today() + timedelta(weeks=1))
 
         r = self.client.get(reverse('breakfasts:next'))
 
@@ -37,12 +41,8 @@ class TestBreakfastListViewNextAsAnonymous(TestCase):
 
     def tests_list_view_multiple_breakfasts(self):
         """Tests."""
-        participant = Participant.objects.create()
-        for i in range(1, 10):
-            Breakfast.objects.create(
-                participant=participant,
-                date=date.today() + timedelta(days=i)
-            )
+        for i in range(1, 11):
+            Breakfast.objects.create(participant=self.participant, date=date.today() + timedelta(days=i))
 
         r = self.client.get(reverse('breakfasts:next'))
 
@@ -57,15 +57,17 @@ class TestBreakfastListViewNextAsLogged(TestCase):
     Note: there is at least one user active in this test. It is the one created in the setUp method.
     """
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """Create a user that will be able to log in."""
-        self.dict = {
+        cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
             'first_name': "Henri",
             'last_name': "Buyse"
         }
-        self.user = get_user_model().objects.create_user(**self.dict)
+        cls.user = get_user_model().objects.create_user(**cls.dict)
+        cls.participant = Participant.objects.create()
 
     def tests_list_view_empty(self):
         """Tests."""
@@ -77,7 +79,7 @@ class TestBreakfastListViewNextAsLogged(TestCase):
 
     def tests_list_view_one_breakfast(self):
         """Tests."""
-        participant = Participant.objects.create()
+        Breakfast.objects.create(participant=self.participant, date=date.today() + timedelta(weeks=1))
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
         r = self.client.get(reverse('breakfasts:next'))
@@ -87,12 +89,8 @@ class TestBreakfastListViewNextAsLogged(TestCase):
 
     def tests_list_view_multiple_breakfasts(self):
         """Tests."""
-        participant = Participant.objects.create()
-        for i in range(1, 10):
-            Breakfast.objects.create(
-                participant=participant,
-                date=date.today() + timedelta(days=i)
-            )
+        for i in range(1, 11):
+            Breakfast.objects.create(participant=self.participant, date=date.today() + timedelta(days=i))
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
         r = self.client.get(reverse('breakfasts:next'))
@@ -105,16 +103,18 @@ class TestBreakfastListViewNextAsLogged(TestCase):
 class TestBreakfastListViewNextAsStaff(TestCase):
     """Tests ListView for Post."""
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """Create a user that will be able to log in."""
-        self.dict = {
+        cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
             'first_name': "Henri",
             'last_name': "Buyse",
             'is_staff': True
         }
-        self.staff = get_user_model().objects.create_user(**self.dict)
+        cls.staff = get_user_model().objects.create_user(**cls.dict)
+        cls.participant = Participant.objects.create()
 
     def tests_list_view_empty(self):
         """Tests."""
@@ -126,7 +126,7 @@ class TestBreakfastListViewNextAsStaff(TestCase):
 
     def tests_list_view_one_breakfast(self):
         """Tests."""
-        participant = Participant.objects.create()
+        Breakfast.objects.create(participant=self.participant, date=date.today() + timedelta(weeks=1))
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
         r = self.client.get(reverse('breakfasts:next'))
@@ -136,12 +136,8 @@ class TestBreakfastListViewNextAsStaff(TestCase):
 
     def tests_list_view_multiple_breakfasts(self):
         """Tests."""
-        participant = Participant.objects.create()
-        for i in range(1, 10):
-            Breakfast.objects.create(
-                participant=participant,
-                date=date.today() + timedelta(days=i)
-            )
+        for i in range(1, 11):
+            Breakfast.objects.create(participant=self.participant, date=date.today() + timedelta(days=i))
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
         r = self.client.get(reverse('breakfasts:next'))
@@ -154,18 +150,18 @@ class TestBreakfastListViewNextAsStaff(TestCase):
 class TestBreakfastListViewNextAsSuperuser(TestCase):
     """Tests ListView for Post."""
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         """Create a user that will be able to log in."""
-        self.dict = {
+        cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
             'first_name': "Henri",
             'last_name': "Buyse",
             'email': 'toto@example.com'
         }
-        self.superuser = get_user_model().objects.create_superuser(**self.dict)
-
-        self.participant = Participant.objects.create()
+        cls.superuser = get_user_model().objects.create_superuser(**cls.dict)
+        cls.participant = Participant.objects.create()
 
     def tests_list_view_empty(self):
         """Tests."""
@@ -177,24 +173,18 @@ class TestBreakfastListViewNextAsSuperuser(TestCase):
 
     def tests_list_view_one_breakfast(self):
         """Tests."""
-        Breakfast.objects.create(
-            participant=self.participant,
-            date=date.today() + timedelta(days=1)
-        )
+        Breakfast.objects.create(participant=self.participant, date=date.today() + timedelta(weeks=1))
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
         r = self.client.get(reverse('breakfasts:next'))
 
         self.assertEqual(r.status_code, 200)
-        self.assertEqual(len(r.context['breakfast_list']), 0)
+        self.assertEqual(len(r.context['breakfast_list']), 1)
 
     def tests_list_view_multiple_breakfasts(self):
         """Tests."""
         for i in range(1, 11):
-            Breakfast.objects.create(
-                participant=self.participant,
-                date=date.today() + timedelta(days=i)
-            )
+            Breakfast.objects.create(participant=self.participant, date=date.today() + timedelta(days=i))
 
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
         r = self.client.get(reverse('breakfasts:next'))

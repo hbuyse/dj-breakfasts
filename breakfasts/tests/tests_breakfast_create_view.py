@@ -86,7 +86,7 @@ class TestBreakfastCreateViewAsLogged(TestCase):
         response = self.client.post(reverse('breakfasts:create'), d)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(Breakfast.objects.all()), 1)
+        self.assertEqual(len(Breakfast.objects.all()), 0)
 
     def test_post(self):
         """Tests."""
@@ -100,7 +100,7 @@ class TestBreakfastCreateViewAsLogged(TestCase):
         self.assertEqual(response.status_code, 302)
         b = Breakfast.objects.last()
         self.assertEqual(response.url, reverse('breakfasts:detail', args=(b.id,)))
-        self.assertEqual(len(Breakfast.objects.all()), 2)
+        self.assertEqual(len(Breakfast.objects.all()), 1)
 
 
 @tag('breakfast', 'view', 'create', 'staff')
@@ -137,7 +137,7 @@ class TestBreakfastCreateViewAsStaff(TestCase):
         response = self.client.post(reverse('breakfasts:create'), d)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(Breakfast.objects.all()), 1)
+        self.assertEqual(len(Breakfast.objects.all()), 0)
 
     def test_post(self):
         """Tests."""
@@ -151,7 +151,7 @@ class TestBreakfastCreateViewAsStaff(TestCase):
         self.assertEqual(response.status_code, 302)
         b = Breakfast.objects.last()
         self.assertEqual(response.url, reverse('breakfasts:detail', args=(b.id,)))
-        self.assertEqual(len(Breakfast.objects.all()), 2)
+        self.assertEqual(len(Breakfast.objects.all()), 1)
 
 
 @tag('breakfast', 'view', 'create', 'superuser')
@@ -188,7 +188,7 @@ class TestBreakfastCreateViewAsSuperuser(TestCase):
         response = self.client.post(reverse('breakfasts:create'), d)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(Breakfast.objects.all()), 1)
+        self.assertEqual(len(Breakfast.objects.all()), 0)
 
     def test_post(self):
         """Tests."""
@@ -202,4 +202,4 @@ class TestBreakfastCreateViewAsSuperuser(TestCase):
         self.assertEqual(response.status_code, 302)
         b = Breakfast.objects.last()
         self.assertEqual(response.url, reverse('breakfasts:detail', args=(b.id,)))
-        self.assertEqual(len(Breakfast.objects.all()), 2)
+        self.assertEqual(len(Breakfast.objects.all()), 1)
