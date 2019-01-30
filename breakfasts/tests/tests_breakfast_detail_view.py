@@ -3,26 +3,26 @@
 
 """Tests the views."""
 
+from datetime import date, timedelta
+
 # Django
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, tag
 from django.urls import reverse
 
 # Current django project
 from breakfasts.models import Breakfast, Participant
 
 
+
+@tag('breakfast', 'view', 'detail', 'anonymous')
 class TestBreakfastDetailViewAsAnonymous(TestCase):
     """Tests."""
 
     @classmethod
     def setUpTestData(cls):
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
-        cls.breakfast = cls.participant.breakfast_set.last()
+        cls.participant = Participant.objects.create()
+        cls.breakfast = Breakfast.objects.create(participant=cls.participant, date=date.today() + timedelta(weeks=1))
 
     def test_get(self):
         """Tests."""
@@ -30,6 +30,8 @@ class TestBreakfastDetailViewAsAnonymous(TestCase):
         self.assertEqual(r.status_code, 200)
 
 
+
+@tag('breakfast', 'view', 'detail', 'logged')
 class TestBreakfastDetailViewAsLogged(TestCase):
     """Tests."""
 
@@ -43,12 +45,8 @@ class TestBreakfastDetailViewAsLogged(TestCase):
             'last_name': "Buyse"
         }
         cls.user = get_user_model().objects.create_user(**cls.dict)
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
-        cls.breakfast = cls.participant.breakfast_set.last()
+        cls.participant = Participant.objects.create()
+        cls.breakfast = Breakfast.objects.create(participant=cls.participant, date=date.today() + timedelta(weeks=1))
 
     def test_get(self):
         """Tests."""
@@ -56,6 +54,8 @@ class TestBreakfastDetailViewAsLogged(TestCase):
         self.assertEqual(r.status_code, 200)
 
 
+
+@tag('breakfast', 'view', 'detail', 'staff')
 class TestBreakfastDetailViewAsStaff(TestCase):
     """Tests."""
 
@@ -70,12 +70,8 @@ class TestBreakfastDetailViewAsStaff(TestCase):
             'is_staff': True
         }
         cls.staff = get_user_model().objects.create_user(**cls.dict)
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
-        cls.breakfast = cls.participant.breakfast_set.last()
+        cls.participant = Participant.objects.create()
+        cls.breakfast = Breakfast.objects.create(participant=cls.participant, date=date.today() + timedelta(weeks=1))
 
     def test_get(self):
         """Tests."""
@@ -85,6 +81,8 @@ class TestBreakfastDetailViewAsStaff(TestCase):
         self.assertEqual(r.status_code, 200)
 
 
+
+@tag('breakfast', 'view', 'detail', 'superuser')
 class TestBreakfastDetailViewAsSuperuser(TestCase):
     """Tests."""
 
@@ -99,12 +97,8 @@ class TestBreakfastDetailViewAsSuperuser(TestCase):
             'email': 'toto@example.com'
         }
         cls.superuser = get_user_model().objects.create_superuser(**cls.dict)
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
-        cls.breakfast = cls.participant.breakfast_set.last()
+        cls.participant = Participant.objects.create()
+        cls.breakfast = Breakfast.objects.create(participant=cls.participant, date=date.today() + timedelta(weeks=1))
 
     def test_get(self):
         """Tests."""

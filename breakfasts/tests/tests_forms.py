@@ -32,7 +32,7 @@ class TestBreakfastForm(TestCase):
 
     def test_only_date(self):
         form_data = {
-            'date': Breakfast.objects.last().date + timedelta(weeks=1)
+            'date': date.today() + timedelta(weeks=1)
         }
         form = BreakfastForm(data=form_data)
         self.assertFalse(form.is_valid())
@@ -62,7 +62,7 @@ class TestBreakfastForm(TestCase):
 
     def test_date_in_future_and_participant(self):
         form_data = {
-            'date': Breakfast.objects.last().date + timedelta(days=1),
+            'date': date.today() + timedelta(days=1),
             'participant': self.participant.id
         }
         form = BreakfastForm(data=form_data)
@@ -85,6 +85,8 @@ class TestBreakfastAlternateForm(TestCase):
             last_name="last_name",
             email="email@email.com"
         )
+        Breakfast.objects.create(participant=cls.participant_1, date=date.today() + timedelta(days=1))
+        Breakfast.objects.create(participant=cls.participant_1, date=date.today() + timedelta(days=2))
 
     def test_empty_form(self):
         form_data = {}
@@ -108,7 +110,7 @@ class TestBreakfastAlternateForm(TestCase):
     def test_three_items_list(self):
         Breakfast.objects.create(
             participant=self.participant_1,
-            date=Breakfast.objects.last().date + timedelta(weeks=1)
+            date=date.today() + timedelta(weeks=1)
             )
         form_data = {
             'breakfast_list': ["1", "2", "3"]

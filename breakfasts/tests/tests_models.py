@@ -48,11 +48,11 @@ class TestParticipantModel(TestCase):
 
     def test_get_future_breakfast(self):
         p = Participant.objects.create(**self.dict)
-        self.assertEqual(len(p.get_future_breakfast()), 1)
+        self.assertEqual(len(p.get_future_breakfast()), 0)
 
-        for i in range(1, 11):
+        for i in range(0, 10):
             Breakfast.objects.create(participant=p, date=date.today() + timedelta(weeks=1))
-        self.assertEqual(len(p.get_future_breakfast()), 11)
+        self.assertEqual(len(p.get_future_breakfast()), 10)
 
     def test_get_next_breakfast(self):
         p = Participant.objects.create(**self.dict)
@@ -72,8 +72,8 @@ class TestBreakfastModel(TestCase):
 
     def test_string_representation(self):
         """Test the string representation of the post model."""
-        b = Breakfast(participant=self.participant, date=Breakfast.objects.last().date)
-        self.assertEqual(str(b), "Breakfast date {}".format(Breakfast.objects.last().date))
+        b = Breakfast(participant=self.participant, date=date.today())
+        self.assertEqual(str(b), "Breakfast date {}".format(date.today()))
 
     def test_verbose_name(self):
         """Test the verbose name in singular."""
@@ -92,5 +92,5 @@ class TestBreakfastModel(TestCase):
         self.assertRaises(ValidationError, b.full_clean)
 
     def test_date_is_tomorrow(self):
-        b = Breakfast(participant=self.participant, date=Breakfast.objects.last().date + timedelta(days=2))
+        b = Breakfast(participant=self.participant, date=date.today() + timedelta(days=2))
         b.full_clean()

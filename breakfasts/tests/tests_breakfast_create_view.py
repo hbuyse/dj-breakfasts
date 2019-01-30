@@ -8,7 +8,7 @@ from datetime import date, timedelta
 
 # Django
 from django.contrib.auth import get_user_model
-from django.test import TestCase, override_settings
+from django.test import TestCase, override_settings, tag
 from django.urls import reverse
 
 # Current django project
@@ -16,22 +16,21 @@ from breakfasts.models import Breakfast, Participant
 
 
 @override_settings(LOGIN_URL="/toto/")
+@tag('breakfast', 'view', 'create', 'anonymous')
 class TestBreakfastCreateViewAsAnonymous(TestCase):
     """Tests."""
 
     @classmethod
     def setUpTestData(cls):
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
+        """Setup for all the following tests."""
+        cls.participant = Participant.objects.create()
 
     def test_get(self):
         """Tests."""
-        r = self.client.get(reverse('breakfasts:create'))
+        response = self.client.get(reverse('breakfasts:create'))
+        
+        self.assertRedirects(response, "/toto/?next=/create/", fetch_redirect_response=False)
 
-        self.assertEqual(r.status_code, 302)
 
     def test_post_date_past(self):
         """Tests."""
@@ -39,10 +38,9 @@ class TestBreakfastCreateViewAsAnonymous(TestCase):
             'participant': self.participant.id,
             'date': date.today() - timedelta(weeks=1)
         }
-        r = self.client.post(reverse('breakfasts:create'), d)
+        response = self.client.post(reverse('breakfasts:create'), d)
 
-        self.assertEqual(r.status_code, 302)
-        self.assertEqual(r.url, '/toto/?next=/create/')
+        self.assertRedirects(response, "/toto/?next=/create/", fetch_redirect_response=False)
 
     def test_post(self):
         """Tests."""
@@ -50,17 +48,18 @@ class TestBreakfastCreateViewAsAnonymous(TestCase):
             'participant': self.participant.id,
             'date': date.today() + timedelta(weeks=1)
         }
-        r = self.client.post(reverse('breakfasts:create'), d)
+        response = self.client.post(reverse('breakfasts:create'), d)
 
-        self.assertEqual(r.status_code, 302)
-        self.assertEqual(r.url, '/toto/?next=/create/')
+        self.assertRedirects(response, "/toto/?next=/create/", fetch_redirect_response=False)
 
 
+@tag('breakfast', 'view', 'create', 'logged')
 class TestBreakfastCreateViewAsLogged(TestCase):
     """Tests."""
 
     @classmethod
     def setUpTestData(cls):
+        """Setup for all the following tests."""
         cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
@@ -68,18 +67,14 @@ class TestBreakfastCreateViewAsLogged(TestCase):
             'last_name': "Buyse"
         }
         get_user_model().objects.create_user(**cls.dict)
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
+        cls.participant = Participant.objects.create()
 
     def test_get(self):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:create'))
+        response = self.client.get(reverse('breakfasts:create'))
 
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_post_date_past(self):
         """Tests."""
@@ -88,9 +83,9 @@ class TestBreakfastCreateViewAsLogged(TestCase):
             'date': date.today() - timedelta(weeks=1)
         }
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.post(reverse('breakfasts:create'), d)
+        response = self.client.post(reverse('breakfasts:create'), d)
 
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(len(Breakfast.objects.all()), 1)
 
     def test_post(self):
@@ -100,19 +95,21 @@ class TestBreakfastCreateViewAsLogged(TestCase):
             'date': date.today() + timedelta(weeks=1)
         }
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.post(reverse('breakfasts:create'), d)
+        response = self.client.post(reverse('breakfasts:create'), d)
 
-        self.assertEqual(r.status_code, 302)
+        self.assertEqual(response.status_code, 302)
         b = Breakfast.objects.last()
-        self.assertEqual(r.url, reverse('breakfasts:detail', args=(b.id,)))
+        self.assertEqual(response.url, reverse('breakfasts:detail', args=(b.id,)))
         self.assertEqual(len(Breakfast.objects.all()), 2)
 
 
+@tag('breakfast', 'view', 'create', 'staff')
 class TestBreakfastCreateViewAsStaff(TestCase):
     """Tests."""
 
     @classmethod
     def setUpTestData(cls):
+        """Setup for all the following tests."""
         cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
@@ -121,18 +118,14 @@ class TestBreakfastCreateViewAsStaff(TestCase):
             "is_staff": True
         }
         get_user_model().objects.create_user(**cls.dict)
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
+        cls.participant = Participant.objects.create()
 
     def test_get(self):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:create'))
+        response = self.client.get(reverse('breakfasts:create'))
 
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_post_date_past(self):
         """Tests."""
@@ -141,9 +134,9 @@ class TestBreakfastCreateViewAsStaff(TestCase):
             'date': date.today() - timedelta(weeks=1)
         }
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.post(reverse('breakfasts:create'), d)
+        response = self.client.post(reverse('breakfasts:create'), d)
 
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(len(Breakfast.objects.all()), 1)
 
     def test_post(self):
@@ -153,20 +146,21 @@ class TestBreakfastCreateViewAsStaff(TestCase):
             'date': date.today() + timedelta(weeks=1)
         }
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.post(reverse('breakfasts:create'), d)
+        response = self.client.post(reverse('breakfasts:create'), d)
 
-        self.assertEqual(r.status_code, 302)
+        self.assertEqual(response.status_code, 302)
         b = Breakfast.objects.last()
-        self.assertEqual(r.url, reverse('breakfasts:detail', args=(b.id,)))
+        self.assertEqual(response.url, reverse('breakfasts:detail', args=(b.id,)))
         self.assertEqual(len(Breakfast.objects.all()), 2)
 
 
+@tag('breakfast', 'view', 'create', 'superuser')
 class TestBreakfastCreateViewAsSuperuser(TestCase):
     """Tests."""
 
     @classmethod
     def setUpTestData(cls):
-        """Setup for al the following tests."""
+        """Setup for all the following tests."""
         cls.dict = {
             'username': "hbuyse",
             'password': "usermodel",
@@ -175,18 +169,14 @@ class TestBreakfastCreateViewAsSuperuser(TestCase):
             'email': 'henri.buyse@gmail.com'
         }
         get_user_model().objects.create_superuser(**cls.dict)
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
+        cls.participant = Participant.objects.create()
 
     def test_get(self):
         """Tests."""
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.get(reverse('breakfasts:create'))
+        response = self.client.get(reverse('breakfasts:create'))
 
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_post_date_past(self):
         """Tests."""
@@ -195,9 +185,9 @@ class TestBreakfastCreateViewAsSuperuser(TestCase):
             'date': date.today() - timedelta(weeks=1)
         }
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.post(reverse('breakfasts:create'), d)
+        response = self.client.post(reverse('breakfasts:create'), d)
 
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(len(Breakfast.objects.all()), 1)
 
     def test_post(self):
@@ -207,9 +197,9 @@ class TestBreakfastCreateViewAsSuperuser(TestCase):
             'date': date.today() + timedelta(weeks=1)
         }
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))
-        r = self.client.post(reverse('breakfasts:create'), d)
+        response = self.client.post(reverse('breakfasts:create'), d)
 
-        self.assertEqual(r.status_code, 302)
+        self.assertEqual(response.status_code, 302)
         b = Breakfast.objects.last()
-        self.assertEqual(r.url, reverse('breakfasts:detail', args=(b.id,)))
+        self.assertEqual(response.url, reverse('breakfasts:detail', args=(b.id,)))
         self.assertEqual(len(Breakfast.objects.all()), 2)

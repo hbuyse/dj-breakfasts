@@ -8,48 +8,36 @@ from datetime import date, timedelta
 
 # Django
 from django.contrib.auth import get_user_model
-from django.test import TestCase, override_settings
+from django.test import TestCase, override_settings, tag
 from django.urls import reverse
 
 # Current django project
 from breakfasts.models import Breakfast, Participant
 
 
+@tag('breakfast', 'view', 'alternate', 'anonymous')
 @override_settings(LOGIN_URL="/toto/")
-class TestBreakfastCreateViewAsAnonymous(TestCase):
+class TestBreakfastAlternateViewAsAnonymous(TestCase):
     """Tests."""
 
     @classmethod
     def setUpTestData(cls):
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
-        cls.breakfast_1 = Breakfast.objects.last()
-        cls.breakfast_2 = Breakfast.objects.create(
-            date=Breakfast.objects.last().date + timedelta(weeks=1),
-            participant=cls.participant
-        )
-        cls.breakfast_3 = Breakfast.objects.create(
-            date=Breakfast.objects.last().date + timedelta(weeks=1),
-            participant=cls.participant
-        )
+        cls.participant = Participant.objects.create()
+        for i in range(0, 3):
+            Breakfast.objects.create(date=date.today() + timedelta(weeks=i), participant=cls.participant)
 
     def test_get(self):
         """Tests."""
         response = self.client.get(reverse('breakfasts:alternate'))
 
-        self.assertEqual(response.status_code, 302)
-        self.assertIn("/toto/", response.url)
+        self.assertRedirects(response, "/toto/?next=/alternate/", fetch_redirect_response=False)
 
     def test_no_data_post(self):
         """Tests."""
         d = {}
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 302)
-        self.assertIn("/toto/", response.url)
+        self.assertRedirects(response, "/toto/?next=/alternate/", fetch_redirect_response=False)
 
     def test_empty_post(self):
         """Tests."""
@@ -58,8 +46,7 @@ class TestBreakfastCreateViewAsAnonymous(TestCase):
         }
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 302)
-        self.assertIn("/toto/", response.url)
+        self.assertRedirects(response, "/toto/?next=/alternate/", fetch_redirect_response=False)
 
     def test_too_little_post(self):
         """Tests."""
@@ -68,8 +55,7 @@ class TestBreakfastCreateViewAsAnonymous(TestCase):
         }
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 302)
-        self.assertIn("/toto/", response.url)
+        self.assertRedirects(response, "/toto/?next=/alternate/", fetch_redirect_response=False)
 
     def test_too_much_item_post(self):
         """Tests."""
@@ -78,8 +64,7 @@ class TestBreakfastCreateViewAsAnonymous(TestCase):
         }
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 302)
-        self.assertIn("/toto/", response.url)
+        self.assertRedirects(response, "/toto/?next=/alternate/", fetch_redirect_response=False)
 
     def test_correct_post(self):
         """Tests."""
@@ -88,11 +73,11 @@ class TestBreakfastCreateViewAsAnonymous(TestCase):
         }
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 302)
-        self.assertIn("/toto/", response.url)
+        self.assertRedirects(response, "/toto/?next=/alternate/", fetch_redirect_response=False)
 
 
-class TestBreakfastCreateViewAsLogged(TestCase):
+@tag('breakfast', 'view', 'alternate', 'logged')
+class TestBreakfastAlternateViewAsLogged(TestCase):
     """Tests."""
 
     @classmethod
@@ -104,20 +89,9 @@ class TestBreakfastCreateViewAsLogged(TestCase):
             'last_name': "Buyse"
         }
         get_user_model().objects.create_user(**cls.dict)
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
-        cls.breakfast_1 = Breakfast.objects.last()
-        cls.breakfast_2 = Breakfast.objects.create(
-            date=Breakfast.objects.last().date + timedelta(weeks=1),
-            participant=cls.participant
-        )
-        cls.breakfast_3 = Breakfast.objects.create(
-            date=Breakfast.objects.last().date + timedelta(weeks=1),
-            participant=cls.participant
-        )
+        cls.participant = Participant.objects.create()
+        for i in range(0, 3):
+            Breakfast.objects.create(date=date.today() + timedelta(weeks=i), participant=cls.participant)
 
     def test_get(self):
         """Tests."""
@@ -182,7 +156,8 @@ class TestBreakfastCreateViewAsLogged(TestCase):
         self.assertEqual(response.url, reverse("breakfasts:next"))
 
 
-class TestBreakfastCreateViewAsStaff(TestCase):
+@tag('breakfast', 'view', 'alternate', 'staff')
+class TestBreakfastAlternateViewAsStaff(TestCase):
     """Tests."""
 
     @classmethod
@@ -195,20 +170,9 @@ class TestBreakfastCreateViewAsStaff(TestCase):
             "is_staff": True
         }
         get_user_model().objects.create_user(**cls.dict)
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
-        cls.breakfast_1 = Breakfast.objects.last()
-        cls.breakfast_2 = Breakfast.objects.create(
-            date=Breakfast.objects.last().date + timedelta(weeks=1),
-            participant=cls.participant
-        )
-        cls.breakfast_3 = Breakfast.objects.create(
-            date=Breakfast.objects.last().date + timedelta(weeks=1),
-            participant=cls.participant
-        )
+        cls.participant = Participant.objects.create()
+        for i in range(0, 3):
+            Breakfast.objects.create(date=date.today() + timedelta(weeks=i), participant=cls.participant)
 
     def test_get(self):
         """Tests."""
@@ -273,7 +237,8 @@ class TestBreakfastCreateViewAsStaff(TestCase):
         self.assertEqual(response.url, reverse("breakfasts:next"))
 
 
-class TestBreakfastCreateViewAsSuperuser(TestCase):
+@tag('breakfast', 'view', 'alternate', 'superuser')
+class TestBreakfastAlternateViewAsSuperuser(TestCase):
     """Tests."""
 
     @classmethod
@@ -287,20 +252,9 @@ class TestBreakfastCreateViewAsSuperuser(TestCase):
             'email': 'henri.buyse@gmail.com'
         }
         get_user_model().objects.create_superuser(**cls.dict)
-        cls.participant = Participant.objects.create(
-            first_name="first_name",
-            last_name="last_name",
-            email="email@email.com"
-        )
-        cls.breakfast_1 = Breakfast.objects.last()
-        cls.breakfast_2 = Breakfast.objects.create(
-            date=Breakfast.objects.last().date + timedelta(weeks=1),
-            participant=cls.participant
-        )
-        cls.breakfast_3 = Breakfast.objects.create(
-            date=Breakfast.objects.last().date + timedelta(weeks=1),
-            participant=cls.participant
-        )
+        cls.participant = Participant.objects.create()
+        for i in range(0, 3):
+            Breakfast.objects.create(date=date.today() + timedelta(weeks=i), participant=cls.participant)
 
     def test_get(self):
         """Tests."""
