@@ -21,6 +21,7 @@ class Participant(models.Model):
     created = models.DateTimeField('creation date', auto_now_add=True)
     modified = models.DateTimeField('last modification date', auto_now=True)
     is_active = models.BooleanField(_("is active"), default=True)
+    notif = models.BooleanField(_("receive email notification"), default=True)
 
     def __str__(self):
         """Representation as a string."""
@@ -51,6 +52,7 @@ class Breakfast(models.Model):
     created = models.DateTimeField('creation date', auto_now_add=True)
     modified = models.DateTimeField('last modification date', auto_now=True)
     email_task_id = models.CharField('email task id', max_length=255, editable=False, blank=True)
+    is_recursive = models.BooleanField(_("is recursive"), default=True)
     next_breakfast_task_id = models.CharField('next breakfast task id', max_length=255, editable=False, blank=True)
 
     def __str__(self):

@@ -146,7 +146,8 @@ class ParticipantCreateView(LoginRequiredMixin, CreateView):
     fields = [
         'first_name',
         'last_name',
-        'email'
+        'email',
+        'notif'
     ]
 
     def get_success_url(self):
@@ -161,7 +162,8 @@ class ParticipantUpdateView(LoginRequiredMixin, UpdateView):
     fields = [
         'first_name',
         'last_name',
-        'email'
+        'email',
+        'notif'
     ]
 
     def get_success_url(self):
