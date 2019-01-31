@@ -24,7 +24,7 @@ class BreakfastForm(ModelForm):
 
         model = Breakfast
         widgets = {
-            "date": DateInput(attrs={"class": "datepicker"}),
+            "date": DateInput(attrs={'class': 'form-control'}),
         }
         fields = ['date', 'participant']
 

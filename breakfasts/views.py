@@ -54,6 +54,14 @@ class BreakfastCreateView(LoginRequiredMixin, CreateView):
     model = Breakfast
     form_class = BreakfastForm
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['disabled_dates'] = [
+            b.date.strftime("%m/%d/%Y") for b in Breakfast.objects.filter(date__gt=datetime.today()).order_by("-date")
+        ]
+        print(context['disabled_dates'])
+        return context
+
     def get_success_url(self):
         """URL to redirect to when the form is successfully validated."""
         return reverse('breakfasts:detail', args=(self.object.id,))

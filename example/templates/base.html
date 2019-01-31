@@ -18,12 +18,14 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
         {# Footer CSS #}
-        <link rel="stylesheet" type="text/css" href="//getbootstrap.com/assets/css/docs.min.css">
+        {% comment %} <link rel="stylesheet" type="text/css" href="//getbootstrap.com/assets/css/docs.min.css"> {% endcomment %}
 
         {# Personal CSS stylesheet #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
         <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon" />
 
+        {# Extra CSS block #}
+        {% block css %}{% endblock css %}
 
         <title>{% block title %}breakfasts{% endblock %}</title>
     </head>
