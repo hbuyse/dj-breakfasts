@@ -44,16 +44,26 @@
   <script type="text/javascript">
     $(function () {
       $('#id_date').datetimepicker({
-          format: 'L',
-          disabledDates: [
-            {% for disable_date in disabled_dates %}
-              moment("{{ disable_date }}"),
-            {% endfor %}
-          ],
-          icons: {
-              next: 'fa fa-angle-right',
-              previous: 'fa fa-angle-left'
-          },
+        format: 'YYYY-MM-DD',
+        {% if not form.date.value %}
+          defaultDate: false,
+        {% endif %}
+        disabledDates: [
+          {% for disable_date in disabled_dates %}
+            moment("{{ disable_date.date|date:'Y-m-d' }}"),
+          {% endfor %}
+        ],
+        icons: {
+          time: 'fa fa-clock-o',
+          date: 'fa fa-calendar',
+          up: 'fa fa-chevron-up',
+          down: 'fa fa-chevron-down',
+          previous: 'fa fa-chevron-left',
+          next: 'fa fa-chevron-right',
+          today: 'fa fa-crosshairs',
+          clear: 'fa fa-trash-o',
+          close: 'fa fa-times'
+        },
       });
     });
   </script>
