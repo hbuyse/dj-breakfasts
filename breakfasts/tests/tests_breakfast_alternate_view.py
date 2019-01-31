@@ -23,7 +23,7 @@ class TestBreakfastAlternateViewAsAnonymous(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.participant = Participant.objects.create()
-        for i in range(0, 3):
+        for i in range(1, 4):
             Breakfast.objects.create(date=date.today() + timedelta(weeks=i), participant=cls.participant)
 
     def test_get(self):
@@ -90,7 +90,7 @@ class TestBreakfastAlternateViewAsLogged(TestCase):
         }
         get_user_model().objects.create_user(**cls.dict)
         cls.participant = Participant.objects.create()
-        for i in range(0, 3):
+        for i in range(1, 4):
             Breakfast.objects.create(date=date.today() + timedelta(weeks=i), participant=cls.participant)
 
     def test_get(self):
@@ -106,7 +106,6 @@ class TestBreakfastAlternateViewAsLogged(TestCase):
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 200)
         self.assertFormError(response, 'form', 'breakfast_list', "This field is required.")
 
     def test_empty_post(self):
@@ -117,7 +116,6 @@ class TestBreakfastAlternateViewAsLogged(TestCase):
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 200)
         self.assertFormError(response, 'form', 'breakfast_list', "This field is required.")
 
     def test_too_little_post(self):
@@ -127,9 +125,6 @@ class TestBreakfastAlternateViewAsLogged(TestCase):
         }
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
-
-        self.assertEqual(response.status_code, 200)
-        form = response.get("form")
 
         self.assertFormError(response, 'form', 'breakfast_list', "You have to select two breakfast dates to alternate.")
 
@@ -141,7 +136,6 @@ class TestBreakfastAlternateViewAsLogged(TestCase):
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 200)
         self.assertFormError(response, 'form', 'breakfast_list', "You have to select two breakfast dates to alternate.")
 
     def test_correct_post(self):
@@ -152,8 +146,7 @@ class TestBreakfastAlternateViewAsLogged(TestCase):
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, reverse("breakfasts:next"))
+        self.assertRedirects(response, reverse("breakfasts:next"))
 
 
 @tag('breakfast', 'view', 'alternate', 'staff')
@@ -171,7 +164,7 @@ class TestBreakfastAlternateViewAsStaff(TestCase):
         }
         get_user_model().objects.create_user(**cls.dict)
         cls.participant = Participant.objects.create()
-        for i in range(0, 3):
+        for i in range(1, 4):
             Breakfast.objects.create(date=date.today() + timedelta(weeks=i), participant=cls.participant)
 
     def test_get(self):
@@ -233,8 +226,7 @@ class TestBreakfastAlternateViewAsStaff(TestCase):
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, reverse("breakfasts:next"))
+        self.assertRedirects(response, reverse("breakfasts:next"))
 
 
 @tag('breakfast', 'view', 'alternate', 'superuser')
@@ -253,7 +245,7 @@ class TestBreakfastAlternateViewAsSuperuser(TestCase):
         }
         get_user_model().objects.create_superuser(**cls.dict)
         cls.participant = Participant.objects.create()
-        for i in range(0, 3):
+        for i in range(1, 4):
             Breakfast.objects.create(date=date.today() + timedelta(weeks=i), participant=cls.participant)
 
     def test_get(self):
@@ -269,7 +261,6 @@ class TestBreakfastAlternateViewAsSuperuser(TestCase):
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 200)
         self.assertFormError(response, 'form', 'breakfast_list', "This field is required.")
 
     def test_empty_post(self):
@@ -280,19 +271,15 @@ class TestBreakfastAlternateViewAsSuperuser(TestCase):
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 200)
         self.assertFormError(response, 'form', 'breakfast_list', "This field is required.")
 
     def test_too_little_post(self):
         """Tests."""
         d = {
-            "breakfast_list": [1]
+            "breakfast_list": ['1']
         }
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
-
-        self.assertEqual(response.status_code, 200)
-        form = response.get("form")
 
         self.assertFormError(response, 'form', 'breakfast_list', "You have to select two breakfast dates to alternate.")
 
@@ -304,7 +291,6 @@ class TestBreakfastAlternateViewAsSuperuser(TestCase):
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 200)
         self.assertFormError(response, 'form', 'breakfast_list', "You have to select two breakfast dates to alternate.")
 
     def test_correct_post(self):
@@ -315,5 +301,4 @@ class TestBreakfastAlternateViewAsSuperuser(TestCase):
         self.assertTrue(self.client.login(username=self.dict['username'], password=self.dict['password']))        
         response = self.client.post(reverse('breakfasts:alternate'), d)
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, reverse("breakfasts:next"))
+        self.assertRedirects(response, reverse("breakfasts:next"))
