@@ -1,6 +1,7 @@
 # -*- coding: utf-8
 """Representation of the breakfasts application and its configuration."""
 
+# Standard library
 import logging
 
 # Django
@@ -15,4 +16,5 @@ class BreakfastsConfig(AppConfig):
     name = 'breakfasts'
 
     def ready(self):
+        """Run when Django starts."""
         logger.debug("App {} ready.".format(self.name))

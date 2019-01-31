@@ -3,6 +3,7 @@
 
 """Tests the views."""
 
+# Standard library
 from datetime import date, timedelta
 
 # Django
@@ -12,7 +13,6 @@ from django.urls import reverse
 
 # Current django project
 from breakfasts.models import Breakfast, Participant
-
 
 
 @tag('breakfast', 'view', 'detail', 'anonymous')

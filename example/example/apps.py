@@ -15,5 +15,6 @@ class ExampleConfig(AppConfig):
     name = "example"
 
     def ready(self):
+        """Import the signal handlers when Django starts."""
         logger.debug("App {} ready.".format(self.name))
         import example.handlers
