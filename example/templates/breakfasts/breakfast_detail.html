@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
 
+
 {% block path %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -9,12 +10,13 @@
       <li class="breadcrumb-item active">{{ breakfast.date }}</li>
     </ol>
   </nav>
-{% endblock %}
+{% endblock path %}
 
 
 {% block page_title %}
   {{ breakfast.date }}
-{% endblock %}
+{% endblock page_title %}
+
 
 {% block page_title_buttons %}
   {% if user.is_authenticated %}
@@ -27,9 +29,9 @@
       {% endif %}
     </div>
   {% endif %}
-{% endblock %}
+{% endblock page_title_buttons %}
 
 
 {% block content %}
     <p>Buyer: {{ breakfast.participant }}</p>
-{% endblock %}
+{% endblock content %}

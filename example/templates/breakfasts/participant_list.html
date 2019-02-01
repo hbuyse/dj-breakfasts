@@ -8,12 +8,13 @@
       <li class="breadcrumb-item active">Participants</li>
     </ol>
   </nav>
-{% endblock %}
+{% endblock path %}
 
 
 {% block page_title %}
   Participants
-{% endblock %}
+{% endblock page_title %}
+
 
 {% block page_title_buttons %}
   {% if user.is_authenticated %}
@@ -21,7 +22,7 @@
       <a class="btn btn-primary" href="{% url 'breakfasts:participant-create' %}">New participant</a>
     </div>
   {% endif %}
-{% endblock %}
+{% endblock page_title_buttons %}
 
 
 {% block content %}
@@ -63,4 +64,4 @@
   {% empty %}
     No participant yet...
   {% endfor %}
-{% endblock %}
+{% endblock content %}

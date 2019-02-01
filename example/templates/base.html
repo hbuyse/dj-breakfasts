@@ -27,7 +27,7 @@
         {# Extra CSS block #}
         {% block css %}{% endblock css %}
 
-        <title>{% block title %}breakfasts{% endblock %}</title>
+        <title>{% block title %}breakfasts{% endblock title %}</title>
     </head>
     <body content="text/html" class="bs-docs-home">
 
@@ -99,15 +99,15 @@
             <div class="row">
                 {# <div class="col-sm-10" id="vcn-content"> #}
                 <main class="col-sm-12 mb-4" id="breakfasts-content">
-                    {% block path %}<p> </p>{% endblock %}
+                    {% block path %}<p> </p>{% endblock path %}
                     <h1>
                       {% block page_title %}
                         Page title
-                      {% endblock %}  
+                      {% endblock page_title %}  
                       {% block page_title_buttons %}
-                      {% endblock %}
+                      {% endblock page_title_buttons %}
                     </h1>
-                    {% block content %}{% endblock %}
+                    {% block content %}{% endblock content %}
                 </main>
             </div>
         </div>
@@ -115,6 +115,6 @@
 
         {# Load Bootstrap JavaScript #}
         {% bootstrap_javascript jquery='slim' %}
-        {% block javascript %}{% endblock %}
+        {% block javascript %}{% endblock javascript %}
     </body>
 </html>

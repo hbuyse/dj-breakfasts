@@ -1,24 +1,26 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
+
 {% block path %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'breakfasts:next' %}">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Connexion</li>
-  </ol>
-</nav>
-{% endblock %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'breakfasts:next' %}">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Connexion</li>
+    </ol>
+  </nav>
+{% endblock path %}
 
 
 {% block page_title %}
   Connexion
-{% endblock %}
+{% endblock page_title %}
+
 
 {% block content %}
-<form method="post">
-  {% csrf_token %}
-  {% bootstrap_form form layout="horizontal" %}
-  {% bootstrap_button "Connexion" button_type="submit" button_class="btn-primary" %}
-</form>
-{% endblock %}
+  <form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form layout="horizontal" %}
+    {% bootstrap_button "Connexion" button_type="submit" button_class="btn-primary" %}
+  </form>
+{% endblock content %}

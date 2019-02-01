@@ -2,6 +2,7 @@
 {% load bootstrap4 %}
 {% load static %}
 
+
 {% block path %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -15,7 +16,8 @@
       {% endif %}
     </ol>
   </nav>
-{% endblock %}
+{% endblock path %}
+
 
 {% block page_title %}
   {% if 'create' in request.path %}
@@ -23,7 +25,8 @@
   {% elif 'update' in request.path %}
     Update breakfast '{{ breakfast.date }}'
   {% endif %}
-{% endblock %}
+{% endblock page_title %}
+
 
 {% block content %}
   <form method="post" enctype="multipart/form-data">
@@ -32,11 +35,13 @@
     {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
     {% bootstrap_button "Reset" button_type="reset" button_class="btn-warning" %}
   </form>
-{% endblock %}
+{% endblock content %}
+
 
 {% block css %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
 {% endblock css %}
+
 
 {% block javascript %}
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>

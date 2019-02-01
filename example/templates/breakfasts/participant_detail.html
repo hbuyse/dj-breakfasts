@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
 
+
 {% block path %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -9,12 +10,13 @@
       <li class="breadcrumb-item active">{{ participant }}</li>
     </ol>
   </nav>
-{% endblock %}
+{% endblock path %}
 
 
 {% block page_title %}
   {{ participant }}
-{% endblock %}
+{% endblock page_title %}
+
 
 {% block page_title_buttons %}
   {% if user.is_authenticated %}
@@ -27,7 +29,7 @@
       {% endif %}
     </div>
   {% endif %}
-{% endblock %}
+{% endblock page_title_buttons %}
 
 
 {% block content %}
@@ -96,4 +98,4 @@
   {% empty %}
     <p>No past breakfasts yet...</p>
   {% endfor %}
-{% endblock %}
+{% endblock content %}
