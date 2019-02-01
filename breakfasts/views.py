@@ -55,6 +55,10 @@ class BreakfastCreateView(LoginRequiredMixin, CreateView):
     form_class = BreakfastForm
 
     def get_context_data(self, **kwargs):
+        """Add the futures breakfasts dates in the context 'disabled_dates'.
+
+        'disabled_dates' can be used in the html template in order to disable dates in your datepicker JS.
+        """
         context = super().get_context_data(**kwargs)
         context['disabled_dates'] = Breakfast.objects.filter(date__gt=datetime.today()).order_by("-date")
         return context
@@ -71,6 +75,10 @@ class BreakfastUpdateView(LoginRequiredMixin, UpdateView):
     form_class = BreakfastForm
 
     def get_context_data(self, **kwargs):
+        """Add the futures breakfasts dates in the context 'disabled_dates'.
+
+        'disabled_dates' can be used in the html template in order to disable dates in your datepicker JS.
+        """
         context = super().get_context_data(**kwargs)
         context['disabled_dates'] = Breakfast.objects.filter(date__gt=datetime.today()).order_by("-date")
         return context
