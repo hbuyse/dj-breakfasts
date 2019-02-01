@@ -29,7 +29,7 @@ services:
   - rabbitmq
 
 install:
-  - pip install tox
+  - pip install tox codecov
 
 # command to run tests using coverage, e.g. python setup.py test
 script:
