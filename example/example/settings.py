@@ -178,9 +178,16 @@ BOOTSTRAP4 = {
     # Note that a URL can be either a string,
     # e.g. "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
     # or a dict like the default value below.
+    # "css_url": {
+    #     "href": "https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css",
+    #     "integrity": "sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS",
+    #     "crossorigin": "anonymous",
+    # },
+
+    # Bootswatch URI
     "css_url": {
-        "href": "https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css",
-        "integrity": "sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS",
+        "href": "https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/flatly/bootstrap.min.css",
+        "integrity": "sha384-9dACWymWSkhCeCgbjV6xqS20Luu4ue6QnEvr+nMXpPMwIq/OB89AoRh27Flsrxzs",
         "crossorigin": "anonymous",
     },
 
