@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
-{% load static %}
+{% load crispy_forms_tags %}
 
 
 {% block path %}
@@ -31,9 +31,18 @@
 {% block content %}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {% bootstrap_form form layout='horizontal' %}
-    {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
-    {% bootstrap_button "Reset" button_type="reset" button_class="btn-warning" %}
+
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        {{ form.date|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        {{ form.participant|as_crispy_field }}
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="reset" class="btn btn-warning">Reset</button>
   </form>
 {% endblock content %}
 

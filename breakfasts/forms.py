@@ -24,15 +24,22 @@ class BreakfastForm(ModelForm):
 
         model = Breakfast
         widgets = {
-            "date": DateInput(attrs={'class': 'form-control'})
+            "date": DateInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'YYYY-MM-DD'
+            })
         }
         fields = ['date', 'participant']
 
 
+class BreakfastsChoiceField(ModelMultipleChoiceField):
+    def label_from_instance(self, obj):
+        return "{}: {} {}".format(obj.date, obj.participant.first_name, obj.participant.last_name )
+
 class BreakfastAlternateForm(Form):
     """Form to alternate participants between two breakfasts."""
 
-    breakfast_list = ModelMultipleChoiceField(
+    breakfast_list = BreakfastsChoiceField(
         queryset=Breakfast.objects.filter(date__gt=datetime.today()).order_by("date"),
         widget=CheckboxSelectMultiple,
         label="Select two breakfasts to alternate the participants",

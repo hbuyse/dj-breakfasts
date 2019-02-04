@@ -84,8 +84,11 @@ INSTALLED_APPS = [
     'django_icons',
     'django_celery_results',
     'bootstrap4',
-    "example"
+    'crispy_forms',
+    'example'
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
