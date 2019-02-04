@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
+{% load crispy_forms_tags %}
 
 
 {% block path %}
@@ -30,7 +31,7 @@
 {% block content %}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {% bootstrap_form form layout='horizontal' %}
+    {{ form|crispy }}
     {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
   </form>
 {% endblock content %}
