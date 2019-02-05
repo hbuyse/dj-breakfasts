@@ -31,7 +31,19 @@
 {% block content %}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form|crispy }}
-    {% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
+
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        {{ form.first_name|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        {{ form.last_name|as_crispy_field }}
+      </div>
+    </div>
+    {{ form.email|as_crispy_field }}
+    {{ form.notif|as_crispy_field }}
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="reset" class="btn btn-warning">Reset</button>
   </form>
 {% endblock content %}
