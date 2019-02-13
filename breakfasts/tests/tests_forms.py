@@ -9,7 +9,7 @@ from django.test import TestCase, override_settings
 
 # Current django project
 # Local Django
-from breakfasts.forms import BreakfastAlternateForm, BreakfastForm
+from breakfasts.forms import BreakfastAlternateForm, BreakfastForm, BreakfastMultipleChoiceField
 from breakfasts.models import Breakfast, Participant
 
 
@@ -124,3 +124,25 @@ class TestBreakfastAlternateForm(TestCase):
         }
         form = BreakfastAlternateForm(data=form_data)
         self.assertTrue(form.is_valid())
+
+
+class TestBreakfastMultipleChoiceField(TestCase):
+    """Test the field BreakfastMultipleChoiceField."""
+
+    @classmethod
+    def setUpTestData(cls):
+        """Set up."""
+        cls.participant_1 = Participant.objects.create(
+            first_name="first_name",
+            last_name="last_name",
+            email="email@email.com"
+        )
+        cls.b1 = Breakfast.objects.create(participant=cls.participant_1, date=date.today() + timedelta(days=1))
+        cls.b2 = Breakfast.objects.create(participant=cls.participant_1, date=date.today() + timedelta(days=2))
+
+    def test_label_from_instance(self):
+        f = BreakfastMultipleChoiceField(queryset=Breakfast.objects.filter(date__gt=date.today()), required=False)
+        self.assertEqual(list(f.choices), [
+            (self.b1.pk, "{}: {} {}".format(self.b1.date, self.b1.participant.first_name, self.b1.participant.last_name)),
+            (self.b2.pk, "{}: {} {}".format(self.b2.date, self.b2.participant.first_name, self.b2.participant.last_name)),
+        ])
