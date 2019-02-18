@@ -57,7 +57,7 @@ class Breakfast(models.Model):
 
     def __str__(self):
         """Representation as a string."""
-        return _("Breakfast date %(date)s") % { "date": self.date }
+        return _("Breakfast date %(date)s") % {"date": self.date}
 
     class Meta:
         verbose_name = _("breakfast")

@@ -19,7 +19,11 @@ logger = logging.getLogger(__name__)
 class BreakfastForm(ModelForm):
     """Form for creating a new assignment for a course."""
 
-    participant = ModelChoiceField(queryset=Participant.objects.filter(is_active=True), empty_label=None, help_text=_('Participant that has to pay'))
+    participant = ModelChoiceField(
+        queryset=Participant.objects.filter(is_active=True),
+        empty_label=None,
+        help_text=_('Participant that has to pay')
+    )
 
     class Meta:
 
