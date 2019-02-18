@@ -1,25 +1,25 @@
 {% extends "base.html" %}
-{% load bootstrap4 %}
+{% load i18n %}
 
 {% block path %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'breakfasts:next' %}">Home</a></li>
-      <li class="breadcrumb-item active">Participants</li>
+      <li class="breadcrumb-item"><a href="{% url 'breakfasts:next' %}">{% trans "Home" %}</a></li>
+      <li class="breadcrumb-item active">{% trans "Participants" %}</li>
     </ol>
   </nav>
 {% endblock path %}
 
 
 {% block page_title %}
-  Participants
+  {% trans "Participants" %}
 {% endblock page_title %}
 
 
 {% block page_title_buttons %}
   {% if user.is_authenticated %}
     <div class="btn-group float-right" role="group" aria-label="Basic example">
-      <a class="btn btn-primary" href="{% url 'breakfasts:participant-create' %}">New participant</a>
+      <a class="btn btn-primary" href="{% url 'breakfasts:participant-create' %}">{% trans "New participant" %}</a>
     </div>
   {% endif %}
 {% endblock page_title_buttons %}
@@ -38,17 +38,9 @@
           {{ participant }}
         </div>
         <div class="card-body">
-          <p class="card-text" style="margin-bottom: 0px;">Future breakfasts: {{ participant.get_future_breakfast|length }}</p>
-          {% comment %}
-          {% if participant.get_next_breakfast %}
-            <p class="card-text" style="margin-bottom: 0px;">Past breakfasts: {{ participant.get_past_breakfast|length }}</p>
-            <p class="card-text">Next breakfast:  {{ participant.get_next_breakfast.date }}</p>
-          {% else %}
-            <p class="card-text">Past breakfasts: {{ participant.get_past_breakfast|length }}</p>
-          {% endif %}
-          {% endcomment %}
-          <p class="card-text">Past breakfasts: {{ participant.get_past_breakfast|length }}</p>
-          <a href="{% url 'breakfasts:participant-detail' participant.pk %}" class="card-link">Details</a>
+          <p class="card-text" style="margin-bottom: 0px;">{% trans "Future breakfasts" %}: {{ participant.get_future_breakfast|length }}</p>
+          <p class="card-text">{% trans "Past breakfasts" %}: {{ participant.get_past_breakfast|length }}</p>
+          <a href="{% url 'breakfasts:participant-detail' participant.pk %}" class="card-link">{% trans "Details" %}</a>
         </div>
       </div>
     </div>
@@ -62,6 +54,6 @@
     {% endif %}
 
   {% empty %}
-    No participant yet...
+    {% trans "No participant yet" %}...
   {% endfor %}
 {% endblock content %}

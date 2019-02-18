@@ -7,6 +7,7 @@ from datetime import datetime
 
 # Django
 from django.forms import CheckboxSelectMultiple, DateInput, Form, ModelChoiceField, ModelForm, ModelMultipleChoiceField
+from django.utils.translation import ugettext_lazy as _
 
 # Current django project
 from breakfasts.models import Breakfast, Participant
@@ -18,13 +19,16 @@ logger = logging.getLogger(__name__)
 class BreakfastForm(ModelForm):
     """Form for creating a new assignment for a course."""
 
-    participant = ModelChoiceField(queryset=Participant.objects.filter(is_active=True), empty_label=None)
+    participant = ModelChoiceField(queryset=Participant.objects.filter(is_active=True), empty_label=None, help_text=_('Participant that has to pay'))
 
     class Meta:
 
         model = Breakfast
         widgets = {
             "date": DateInput(attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD'})
+        }
+        help_texts = {
+            'date': _('The date has to be in the future'),
         }
         fields = ['date', 'participant']
 
@@ -43,6 +47,6 @@ class BreakfastAlternateForm(Form):
     breakfast_list = BreakfastMultipleChoiceField(
         queryset=Breakfast.objects.filter(date__gt=datetime.today()).order_by("date"),
         widget=CheckboxSelectMultiple,
-        label="Select two breakfasts to alternate the participants",
+        label=_("Select two breakfasts to alternate the participants"),
         validators=[only_two_items_in_list]
     )

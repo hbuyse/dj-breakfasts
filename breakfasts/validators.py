@@ -37,8 +37,8 @@ def date_is_present_or_future(value):
 def only_two_items_in_list(value):
     """Check that there are only two items in the given list."""
     if value is None:
-        raise ValidationError("Breakfast list cannot be None.")
+        raise ValidationError(_("Breakfast list cannot be None."))
     elif not isinstance(value, list):
-        raise ValidationError("Breakfast list has to be a list.")
+        raise ValidationError(_("Breakfast list has to be a list."))
     elif len(value) != 2:
-        raise ValidationError("You have to select two breakfast dates to alternate.")
+        raise ValidationError(_("You have to select two breakfast dates to alternate."))

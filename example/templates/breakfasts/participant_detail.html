@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-{% load bootstrap4 %}
+{% load i18n %}
+{% load l10n %}
 
 
 {% block path %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'breakfasts:next' %}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'breakfasts:participant-list' %}">Participants</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'breakfasts:next' %}">{% trans "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'breakfasts:participant-list' %}">{% trans "Participants" %}</a></li>
       <li class="breadcrumb-item active">{{ participant }}</li>
     </ol>
   </nav>
@@ -22,10 +23,10 @@
   {% if user.is_authenticated %}
     <div class="btn-group float-right" role="group" aria-label="Basic example">
       {% if perms.breakfasts.change_participant %}
-        <a class="btn btn-primary" href="{% url 'breakfasts:participant-update' participant.id %}">Update</a>
+        <a class="btn btn-primary" href="{% url 'breakfasts:participant-update' participant.id %}">{% trans "Update" %}</a>
       {% endif %}
       {% if perms.breakfasts.delete_participant %}
-        <a class="btn btn-danger" href="{% url 'breakfasts:participant-deactivate' participant.id %}">Deactivate</a>
+        <a class="btn btn-danger" href="{% url 'breakfasts:participant-deactivate' participant.id %}">{% trans "Deactivate" %}</a>
       {% endif %}
     </div>
   {% endif %}
@@ -36,16 +37,16 @@
   {% if user.is_authenticated %}
     {% if not participant.is_active %}
       <div class="alert alert-danger" role="alert">
-        Participant not activated
+        {% trans "Participant not activated" %}
       </div>
     {% else %}
       <div class="alert alert-success" role="alert">
-        Participant activated
+        {% trans "Participant activated" %}
       </div>
     {% endif %}
   {% endif %}
 
-  <h3>Future breakfasts</h3>
+  <h3>{% trans "Future breakfasts" %}</h3>
   {% for breakfast in participant.get_future_breakfast %}
 
     {% if forloop.first %}
@@ -55,7 +56,7 @@
     <div class="col-3" style="margin-bottom: 10px;">
       <div class="card">
         <div class="card-body">
-          {{ breakfast.date|date:"F j, Y" }}
+          {{ breakfast.date|localize }}
         </div>
       </div>
     </div>
@@ -69,10 +70,10 @@
     {% endif %}
 
   {% empty %}
-    <p>No future breakfasts yet...</p>
+    <p>{% trans "No future breakfasts yet" %}...</p>
   {% endfor %}
 
-  <h3>Past breakfasts</h3>
+  <h3>{% trans "Past breakfasts" %}</h3>
   {% for breakfast in participant.get_past_breakfast %}
 
     {% if forloop.first %}
@@ -82,7 +83,7 @@
     <div class="col-3" style="margin-bottom: 10px;">
       <div class="card">
         <div class="card-body">
-          {{ breakfast.date|date:"F j, Y" }}
+          {{ breakfast.date|localize }}
         </div>
       </div>
     </div>
@@ -96,6 +97,6 @@
     {% endif %}
 
   {% empty %}
-    <p>No past breakfasts yet...</p>
+    <p>{% trans "No past breakfasts yet" %}...</p>
   {% endfor %}
 {% endblock content %}

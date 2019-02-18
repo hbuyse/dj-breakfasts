@@ -1,0 +1,108 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-18 17:01+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: forms.py:22
+msgid "Participant that has to pay"
+msgstr "Participant qui doit payer"
+
+#: forms.py:31
+msgid "The date has to be in the future"
+msgstr "La date doit être dans le futur"
+
+#: forms.py:50
+msgid "Select two breakfasts to alternate the participants"
+msgstr "Sélectionner deux dates de petit-déjeuner où il faut alterner les participants"
+
+#: models.py:18
+msgid "first name"
+msgstr "prénom"
+
+#: models.py:19
+msgid "last name"
+msgstr "nom de famille"
+
+#: models.py:20
+msgid "email"
+msgstr "email"
+
+#: models.py:21 models.py:52
+msgid "creation date"
+msgstr "date de création"
+
+#: models.py:22 models.py:53
+msgid "last modification date"
+msgstr "date de dernière modification"
+
+#: models.py:23
+msgid "is active"
+msgstr "est actif"
+
+#: models.py:24
+msgid "receive email notification"
+msgstr "réception d'email de notification"
+
+#: models.py:31
+msgid "participant"
+msgstr "participant"
+
+#: models.py:54
+msgid "email task id"
+msgstr "id de tache d'envoi d'email"
+
+#: models.py:55
+msgid "is recursive"
+msgstr "est récurrent"
+
+#: models.py:56
+msgid "next breakfast task id"
+msgstr "id de tache de renouvellement de petit-déjeuner"
+
+#: models.py:60
+#, python-format
+msgid "Breakfast date %(date)s"
+msgstr "Date de petit-déjeuner %(date)s"
+
+#: models.py:63
+msgid "breakfast"
+msgstr "petit-déjeuner"
+
+#: validators.py:17 validators.py:20
+msgid "The date entered must be greater than today."
+msgstr "La date entrée doit être plus tard qu'aujourd'hui."
+
+#: validators.py:22 validators.py:34
+msgid "The value entered isn't a valid type of date or datetime."
+msgstr "La valeur entrée n'est pas de type 'date' ou 'datetime'."
+
+#: validators.py:29 validators.py:32
+msgid "The date entered must be today or greater."
+msgstr "La date entrée doit être aujourd'hui ou plus tard."
+
+#: validators.py:40
+msgid "Breakfast list cannot be None."
+msgstr "La liste de petit-déjeuner ne peut pas être 'None'."
+
+#: validators.py:42
+msgid "Breakfast list has to be a list."
+msgstr "breakfast_list doit être une liste."
+
+#: validators.py:44
+msgid "You have to select two breakfast dates to alternate."
+msgstr "Vous devez sélectionner deux dates de petit-déjeuners à alterner."

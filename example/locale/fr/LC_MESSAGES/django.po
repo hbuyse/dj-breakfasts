@@ -1,0 +1,206 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-18 18:13+0100\n"
+"PO-Revision-Date: 2019-02-18 18:11+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: example/settings.py:158
+msgid "English"
+msgstr "Anglais"
+
+#: example/settings.py:159
+msgid "French"
+msgstr "Français"
+
+#: templates/404.html:7 templates/breakfasts/breakfast_alternate.html:9
+#: templates/breakfasts/breakfast_detail.html:9
+#: templates/breakfasts/breakfast_form.html:9
+#: templates/breakfasts/breakfast_list.html:8
+#: templates/breakfasts/participant_detail.html:9
+#: templates/breakfasts/participant_form.html:9
+#: templates/breakfasts/participant_list.html:7
+#: templates/registration/login.html:9
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/404.html:8 templates/404.html:15
+msgid "Page not found..."
+msgstr "Page non trouvé"
+
+#: templates/404.html:20
+msgid "The page is not found..."
+msgstr "La page demandée n'a pas été trouvée."
+
+#: templates/base.html:50 templates/breakfasts/breakfast_list.html:10
+#: templates/breakfasts/breakfast_list.html:21
+#: templates/breakfasts/participant_detail.html:76
+#: templates/breakfasts/participant_list.html:42
+msgid "Past breakfasts"
+msgstr "Anciens petit-déjeuners"
+
+#: templates/base.html:55 templates/breakfasts/participant_detail.html:10
+#: templates/breakfasts/participant_form.html:10
+#: templates/breakfasts/participant_list.html:8
+#: templates/breakfasts/participant_list.html:15
+msgid "Participants"
+msgstr "Participants"
+
+#: templates/base.html:61 templates/breakfasts/breakfast_form.html:12
+#: templates/breakfasts/participant_form.html:12
+#: templates/breakfasts/participant_form.html:24
+msgid "Create"
+msgstr "Création"
+
+#: templates/base.html:66 templates/breakfasts/breakfast_alternate.html:11
+#: templates/breakfasts/breakfast_alternate.html:41
+msgid "Alternate"
+msgstr "Alterner"
+
+#: templates/base.html:75
+msgid "Login"
+msgstr "Connexion"
+
+#: templates/base.html:85
+msgid "Admin"
+msgstr "Administration"
+
+#: templates/base.html:88
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: templates/base.html:108
+msgid "Page title"
+msgstr "Titre de la page"
+
+#: templates/breakfasts/breakfast_alternate.html:10
+#: templates/breakfasts/breakfast_detail.html:10
+#: templates/breakfasts/breakfast_form.html:10
+msgid "Breakfasts"
+msgstr "Petit-déjeuners"
+
+#: templates/breakfasts/breakfast_alternate.html:18
+msgid "Alternate breakfasts"
+msgstr "Petit-déjeuner à alterner"
+
+#: templates/breakfasts/breakfast_alternate.html:42
+#: templates/breakfasts/breakfast_form.html:45
+#: templates/breakfasts/participant_form.html:47
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#: templates/breakfasts/breakfast_detail.html:26
+#: templates/breakfasts/breakfast_form.html:15
+#: templates/breakfasts/breakfast_list.html:55
+#: templates/breakfasts/participant_detail.html:26
+#: templates/breakfasts/participant_form.html:15
+#: templates/breakfasts/participant_form.html:26
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: templates/breakfasts/breakfast_detail.html:29
+#: templates/breakfasts/breakfast_list.html:58
+msgid "Delete"
+msgstr "Supprimer"
+
+#: templates/breakfasts/breakfast_detail.html:37
+msgid "Buyer"
+msgstr "Acheteur"
+
+#: templates/breakfasts/breakfast_form.html:44
+#: templates/breakfasts/participant_form.html:46
+msgid "Save"
+msgstr "Sauver"
+
+#: templates/breakfasts/breakfast_list.html:12
+#: templates/breakfasts/breakfast_list.html:23
+msgid "Next breakfasts"
+msgstr "Futurs petit-déjeuners"
+
+#: templates/breakfasts/breakfast_list.html:34
+msgid "Date"
+msgstr "Date"
+
+#: templates/breakfasts/breakfast_list.html:35
+msgid "First name"
+msgstr "Prénom"
+
+#: templates/breakfasts/breakfast_list.html:36
+msgid "Last name"
+msgstr "Nom de famille"
+
+#: templates/breakfasts/breakfast_list.html:38
+msgid "Links"
+msgstr "Liens"
+
+#: templates/breakfasts/breakfast_list.html:70
+msgid "No breakfast planned yet"
+msgstr "Pas de petit-déjeuner de prévu pour le moment"
+
+#: templates/breakfasts/participant_confirm_deactivate.html:8
+#, python-format
+msgid "Do you really want to deactivate the participant '%(participant)s'?"
+msgstr "Voulez-vous vraiment désactiver le participant '%(participant)s'?"
+
+#: templates/breakfasts/participant_confirm_deactivate.html:9
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: templates/breakfasts/participant_detail.html:29
+msgid "Deactivate"
+msgstr "Désactiver"
+
+#: templates/breakfasts/participant_detail.html:40
+msgid "Participant not activated"
+msgstr "Participant non actif"
+
+#: templates/breakfasts/participant_detail.html:44
+msgid "Participant activated"
+msgstr "Participant actif"
+
+#: templates/breakfasts/participant_detail.html:49
+#: templates/breakfasts/participant_list.html:41
+msgid "Future breakfasts"
+msgstr "Futurs petit-déjeuners"
+
+#: templates/breakfasts/participant_detail.html:73
+msgid "No future breakfasts yet"
+msgstr "Pas de futur petit-déjeuner de prévu pour le moment"
+
+#: templates/breakfasts/participant_detail.html:100
+msgid "No past breakfasts yet"
+msgstr "Pas de petit-déjeuner passé"
+
+#: templates/breakfasts/participant_list.html:22
+msgid "New participant"
+msgstr "Nouveau participant"
+
+#: templates/breakfasts/participant_list.html:43
+msgid "Details"
+msgstr "Détails"
+
+#: templates/breakfasts/participant_list.html:57
+msgid "No participant yet"
+msgstr "Pas de participant pour le moment"
+
+#: templates/registration/login.html:10 templates/registration/login.html:17
+#: templates/registration/login.html:33
+msgid "Connection"
+msgstr "Connexion"
+
+#: templates/registration/login.html:34
+msgid "Cancel"
+msgstr "Annuler"

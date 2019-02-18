@@ -3,6 +3,9 @@
     <head lang="en">
         <meta charset="UTF-8">
 
+        {# Internationalization #}
+        {% load i18n %}
+
         {# Load the static files library #}
         {% load static %}
 
@@ -12,7 +15,6 @@
 
         {# Load Bootstrap4 CSS#}
         {% bootstrap_css %}
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
         {# Font Awesome : for icons #}
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
@@ -44,23 +46,23 @@
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'breakfasts:past' %}">
-                  Past breakfasts
+                  {% trans "Past breakfasts" %}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'breakfasts:participant-list' %}">
-                  Participants
+                  {% trans "Participants" %}
                 </a>
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'breakfasts:create' %}">
-                  Create
+                  {% trans "Create" %}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'breakfasts:alternate' %}">
-                  Alternate
+                  {% trans "Alternate" %}
                 </a>
               </li>
               {% endif %}
@@ -69,7 +71,7 @@
               {% if not user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'login' %}">
-                    Login
+                    {% trans "Login" %}
                   </a>
                 </li> 
               {% else %}
@@ -79,10 +81,10 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     {% if user.is_staff %}
-                      <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
+                      <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
                       <div class="dropdown-divider"></div>
                     {% endif %}
-                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">{% trans "Logout" %}</a>
                   </div>
                 </li>
               {% endif %}
@@ -102,7 +104,7 @@
                     {% block path %}<p> </p>{% endblock path %}
                     <h1>
                       {% block page_title %}
-                        Page title
+                        {% trans "Page title" %}%
                       {% endblock page_title %}  
                       {% block page_title_buttons %}
                       {% endblock page_title_buttons %}

@@ -6,7 +6,7 @@ from datetime import datetime
 
 # Django
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 # Current django project
 from breakfasts.validators import date_is_future
@@ -18,8 +18,8 @@ class Participant(models.Model):
     first_name = models.CharField(_('first name'), max_length=128)
     last_name = models.CharField(_('last name'), max_length=128)
     email = models.EmailField(_("email"), max_length=254)
-    created = models.DateTimeField('creation date', auto_now_add=True)
-    modified = models.DateTimeField('last modification date', auto_now=True)
+    created = models.DateTimeField(_('creation date'), auto_now_add=True)
+    modified = models.DateTimeField(_('last modification date'), auto_now=True)
     is_active = models.BooleanField(_("is active"), default=True)
     notif = models.BooleanField(_("receive email notification"), default=True)
 
@@ -49,15 +49,15 @@ class Breakfast(models.Model):
 
     participant = models.ForeignKey('Participant', on_delete=models.DO_NOTHING, unique_for_date="date")
     date = models.DateField('date', validators=[date_is_future])
-    created = models.DateTimeField('creation date', auto_now_add=True)
-    modified = models.DateTimeField('last modification date', auto_now=True)
-    email_task_id = models.CharField('email task id', max_length=255, editable=False, blank=True)
+    created = models.DateTimeField(_("creation date"), auto_now_add=True)
+    modified = models.DateTimeField(_("last modification date"), auto_now=True)
+    email_task_id = models.CharField(_("email task id"), max_length=255, editable=False, blank=True)
     is_recursive = models.BooleanField(_("is recursive"), default=True)
-    next_breakfast_task_id = models.CharField('next breakfast task id', max_length=255, editable=False, blank=True)
+    next_breakfast_task_id = models.CharField(_("next breakfast task id"), max_length=255, editable=False, blank=True)
 
     def __str__(self):
         """Representation as a string."""
-        return "Breakfast date {}".format(self.date)
+        return _("Breakfast date %(date)s") % { "date": self.date }
 
     class Meta:
         verbose_name = _("breakfast")
