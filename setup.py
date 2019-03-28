@@ -28,7 +28,7 @@ VERSION = None
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    "Django<2.2"
+    "Django>=2.0,<2.2",
 ]
 
 # What packages are optional?
@@ -39,11 +39,15 @@ EXTRAS = {
         'flake8-rst-docstrings',
         'flake8-logging-format',
         'pep8-naming',
-        'isort',
+        'isort==4.3.10',
         'coverage',
         'codecov',
+        'pylint',
     ]
 }
+
+TESTS_REQUIRE = [
+]
 
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
@@ -129,6 +133,7 @@ setup(
     # },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
+    tests_require=TESTS_REQUIRE,
     include_package_data=True,
     license='MIT',
     classifiers=[
